@@ -7,11 +7,15 @@ package frc.robot.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Calibrations.OutpostShotCalibrations;
-import frc.robot.subsystems.Chamber;
-import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.LeftChamber;
+import frc.robot.subsystems.LeftFlywheel;
+import frc.robot.subsystems.LeftHood;
 import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.LeftTurret;
+import frc.robot.subsystems.RightChamber;
+import frc.robot.subsystems.RightFlywheel;
+import frc.robot.subsystems.RightHood;
+import frc.robot.subsystems.RightTurret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -24,39 +28,57 @@ public class OutpostShot extends SequentialCommandGroup {
      * A Command sequence that will score when the robot is touching the outpost
      * corner with the intake facing the tower.
      *
-     * @param flywheel The flywheel to use
-     * @param hood     The hood to use
-     * @param turret   The turret to use
+     * @param leftFlywheel The leftFlywheel to use
+     * @param leftHood     The leftHood to use
+     * @param leftTurret   The leftTurret to use
      * @param indexer  The indexer to use
-     * @param chamber  The chamber to use
+     * @param leftChamber  The leftChamber to use
+     * @param rightFlywheel The rightFlywheel to use
+     * @param rightHood     The rightHood to use
+     * @param rightTurret   The rightTurret to use
+     * @param rightChamber  The rightChamber to use
      */
-    public OutpostShot(Flywheel flywheel, Hood hood, Turret turret, Indexer indexer, Chamber chamber) {
+    public OutpostShot(LeftFlywheel leftFlywheel, LeftHood leftHood, LeftTurret leftTurret, Indexer indexer, LeftChamber leftChamber, RightFlywheel rightFlywheel, RightHood rightHood, RightTurret rightTurret, RightChamber rightChamber) {
         super(
-            // Spin up flywheel, move hood, move turret
+            // Spin up flywheels, move hoods, move turrets
             new ParallelCommandGroup(
-                new SetFlywheelVelocity(
-                    () -> OutpostShotCalibrations.kFlywheelVelocity,
-                    OutpostShotCalibrations.kFlywheelVelocityTolerance, 
-                    flywheel).withTimeout(0.25),
-                new MoveHoodToPosition(
-                    OutpostShotCalibrations.kHoodAngle,
-                    OutpostShotCalibrations.kHoodAngleTolerance, 
-                    hood).withTimeout(0.25),
-                new MoveTurretToPosition(
-                    () -> OutpostShotCalibrations.kTurretAngle,
-                    OutpostShotCalibrations.kTurretAngleTolerance, 
-                    turret).withTimeout(0.25)),
-            // Once turret, flywheel and hood are prepped, run indexer and chamber.
+                new LeftSetFlywheelVelocity(
+                    () -> OutpostShotCalibrations.kLeftFlywheelVelocity,
+                    OutpostShotCalibrations.kLeftFlywheelVelocityTolerance,
+                    leftFlywheel).withTimeout(0.25),
+                new LeftMoveHoodToPosition(
+                    OutpostShotCalibrations.kLeftHoodAngle,
+                    OutpostShotCalibrations.kLeftHoodAngleTolerance,
+                    leftHood).withTimeout(0.25),
+                new LeftMoveTurretToPosition(
+                    () -> OutpostShotCalibrations.kLeftTurretAngle,
+                    OutpostShotCalibrations.kLeftTurretAngleTolerance,
+                    leftTurret).withTimeout(0.25),
+                new RightSetFlywheelVelocity(
+                    () -> OutpostShotCalibrations.kRightFlywheelVelocity,
+                    OutpostShotCalibrations.kRightFlywheelVelocityTolerance,
+                    rightFlywheel).withTimeout(0.25),
+                new RightMoveHoodToPosition(
+                    OutpostShotCalibrations.kRightHoodAngle,
+                    OutpostShotCalibrations.kRightHoodAngleTolerance,
+                    rightHood).withTimeout(0.25),
+                new RightMoveTurretToPosition(
+                    () -> OutpostShotCalibrations.kRightTurretAngle,
+                    OutpostShotCalibrations.kRightTurretAngleTolerance,
+                    rightTurret).withTimeout(0.25)),
+            // Once turrets, flywheels and hoods are prepped, run indexer and chambers.
             new ParallelCommandGroup(
                 new SetIndexerVelocity(
-                    OutpostShotCalibrations.kIndexerVelocity, 
+                    OutpostShotCalibrations.kIndexerVelocity,
                     OutpostShotCalibrations.kIndexerVelocityTolerance,
                     indexer),
-                new SetChamberVelocity(
-                    OutpostShotCalibrations.kChamberVelocity,
-                    OutpostShotCalibrations.kChamberVelocityTolerance, 
-                    false, chamber, turret, hood, flywheel)));
-        // Add your commands in the addCommands() call, e.g.
-        // addCommands(new FooCommand(), new BarCommand());
+                new LeftSetChamberVelocity(
+                    OutpostShotCalibrations.kLeftChamberVelocity,
+                    OutpostShotCalibrations.kLeftChamberVelocityTolerance,
+                    false, leftChamber, leftTurret, leftHood, leftFlywheel),
+                new RightSetChamberVelocity(
+                    OutpostShotCalibrations.kRightChamberVelocity,
+                    OutpostShotCalibrations.kRightChamberVelocityTolerance,
+                    false, rightChamber, rightTurret, rightHood, rightFlywheel)));
     }
 }

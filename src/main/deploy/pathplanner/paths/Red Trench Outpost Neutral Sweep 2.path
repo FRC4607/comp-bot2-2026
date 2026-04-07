@@ -1,0 +1,109 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.27,
+        "y": 0.4685333333333336
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.247845934379456,
+        "y": 0.6644793152639101
+      },
+      "isLocked": false,
+      "linkedName": "Red Trench Outpost"
+    },
+    {
+      "anchor": {
+        "x": 7.817146932952923,
+        "y": 2.2171184022824537
+      },
+      "prevControl": {
+        "x": 7.857075019464678,
+        "y": 1.5449956126679367
+      },
+      "nextControl": {
+        "x": 7.739514978601994,
+        "y": 3.5239229671897285
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.876348074179743,
+        "y": 2.7605420827389446
+      },
+      "prevControl": {
+        "x": 6.600912981455065,
+        "y": 3.7180028530670475
+      },
+      "nextControl": {
+        "x": 5.531214216909699,
+        "y": 2.3044723427749583
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.9004564907275316,
+        "y": 2.6182168330955777
+      },
+      "prevControl": {
+        "x": 3.4956348074179737,
+        "y": 2.320627674750357
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6396588486140837,
+      "rotationDegrees": 113.25541124774632
+    },
+    {
+      "waypointRelativePos": 2.3,
+      "rotationDegrees": -177.4779492405879
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.8392977717758217,
+      "maxWaypointRelativePos": 3.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 3.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -145.24408744645862
+  },
+  "reversed": false,
+  "folder": "RED PATHS",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

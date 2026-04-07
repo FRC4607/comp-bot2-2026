@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
@@ -21,7 +22,7 @@ public class Indexer extends SubsystemBase {
 
     private final TalonFXConfiguration m_talonFXConfig;
 
-    private final VelocityTorqueCurrentFOC m_request;
+    private final MotionMagicVelocityTorqueCurrentFOC m_request;
 
     /** Creates and configures the indexer subsystem. */
     public Indexer() {
@@ -30,7 +31,9 @@ public class Indexer extends SubsystemBase {
 
         m_talonFXConfig = new TalonFXConfiguration();
 
-        m_request = new VelocityTorqueCurrentFOC(0).withAcceleration(IndexerCalibrations.kMaxAcceleration);
+        m_request = new MotionMagicVelocityTorqueCurrentFOC(0);
+
+        m_talonFXConfig.MotionMagic.MotionMagicAcceleration = IndexerCalibrations.kMaxAcceleration;
 
         // Feedback configs
         m_talonFXConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;

@@ -1,0 +1,109 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.27,
+        "y": 7.638
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.057116720994312,
+        "y": 7.447843351994764
+      },
+      "isLocked": false,
+      "linkedName": "Red Trench Depot"
+    },
+    {
+      "anchor": {
+        "x": 7.90771754636234,
+        "y": 6.046961483594864
+      },
+      "prevControl": {
+        "x": 7.878722584016649,
+        "y": 6.719644610014921
+      },
+      "nextControl": {
+        "x": 7.972410841654778,
+        "y": 4.546077032810272
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.0057346647646215,
+        "y": 5.16713266761769
+      },
+      "prevControl": {
+        "x": 6.46910469084075,
+        "y": 4.218327376128476
+      },
+      "nextControl": {
+        "x": 5.7340228245363765,
+        "y": 5.723495007132667
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.693437945791726,
+        "y": 5.0377460770328115
+      },
+      "prevControl": {
+        "x": 2.9522111269614832,
+        "y": 5.425905848787448
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6396588486140837,
+      "rotationDegrees": -67.46601180537834
+    },
+    {
+      "waypointRelativePos": 2.3,
+      "rotationDegrees": -177.4779492405879
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.8392977717758217,
+      "maxWaypointRelativePos": 3.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 3.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 140.10216525235816
+  },
+  "reversed": false,
+  "folder": "RED PATHS",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.28529644008395955
+  },
+  "useDefaultConstraints": true
+}

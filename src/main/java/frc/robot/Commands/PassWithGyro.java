@@ -6,15 +6,22 @@ package frc.robot.Commands;
 
 import javax.naming.PartialResultException;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Calibrations.PassWithGyroCalibrations;
-import frc.robot.subsystems.Chamber;
+import frc.robot.subsystems.LeftChamber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.Hood;
+import frc.robot.subsystems.LeftFlywheel;
+import frc.robot.subsystems.LeftHood;
 import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.LeftTurret;
+import frc.robot.subsystems.RightChamber;
+import frc.robot.subsystems.RightFlywheel;
+import frc.robot.subsystems.RightHood;
+import frc.robot.subsystems.RightTurret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -24,36 +31,69 @@ import frc.robot.subsystems.Turret;
 public class PassWithGyro extends ParallelCommandGroup {
     
     /** Creates a new PassWithGyro. */
-    public PassWithGyro(CommandSwerveDrivetrain drivetrain, Indexer indexer, Chamber chamber, Turret turret, Hood hood,
-            Flywheel flywheel) {
+    public PassWithGyro(CommandSwerveDrivetrain drivetrain, Indexer indexer, LeftChamber leftChamber, LeftTurret leftTurret, LeftHood leftHood,
+            LeftFlywheel leftFlywheel, RightChamber rightChamber, RightTurret rightTurret, RightHood rightHood, RightFlywheel rightFlywheel) {
         super(
-                new MoveTurretToPosition(
-                        () -> drivetrain.getState().Pose.getRotation().getDegrees(),
+                new ConditionalCommand(
+                    new LeftMoveTurretToPosition(
+                        () -> -drivetrain.getState().Pose.getRotation().getDegrees(),
                         0,
-                        turret),
+                        leftTurret)
+                        .alongWith(new RightMoveTurretToPosition(
+                            () -> -drivetrain.getState().Pose.getRotation().getDegrees(), 
+                            0, 
+                            rightTurret)), 
+                    new LeftMoveTurretToPosition(
+                        () -> -drivetrain.getState().Pose.getRotation().getDegrees() + 180, 
+                        0, 
+                        leftTurret)
+                        .alongWith(
+                            new RightMoveTurretToPosition(
+                                () -> -drivetrain.getState().Pose.getRotation().getDegrees() + 180, 
+                                0, 
+                                rightTurret)), 
+                    () -> DriverStation.getAlliance().get() == Alliance.Red),
                 new SequentialCommandGroup(
-                        new ParallelCommandGroup(
-                                new MoveHoodToPosition(
-                                        PassWithGyroCalibrations.kHoodAngle,
-                                        PassWithGyroCalibrations.kHoodTolerance,
-                                        hood)
-                                        .withTimeout(
-                                                PassWithGyroCalibrations.kHoodTimeout),
-                                new SetFlywheelVelocity(
-                                        () -> PassWithGyroCalibrations.kFlywheelVelocity,
-                                        PassWithGyroCalibrations.kFlywheelVelocityTolerance,
-                                        flywheel)
-                                        .withTimeout(
-                                                PassWithGyroCalibrations.kFlywheelTimeout)),
-                        new ParallelCommandGroup(
-                                new SetChamberVelocity(
-                                        PassWithGyroCalibrations.kChamberVelocity,
-                                        PassWithGyroCalibrations.kChamberVelocityTolerance,
-                                        true, chamber, turret, hood, flywheel),
-                                new SetIndexerVelocity(
-                                        PassWithGyroCalibrations.kIndexerVelocity,
-                                        PassWithGyroCalibrations.kIndexerVelocityTolerance,
-                                        indexer))));
+                    new ParallelCommandGroup(
+                        new SequentialCommandGroup(
+                                new ParallelCommandGroup(
+                                        new LeftMoveHoodToPosition(
+                                                PassWithGyroCalibrations.kLeftHoodAngle,
+                                                PassWithGyroCalibrations.kLeftHoodTolerance,
+                                                leftHood)
+                                                .withTimeout(
+                                                        PassWithGyroCalibrations.kLeftHoodTimeout),
+                                        new LeftSetFlywheelVelocity(
+                                                () -> PassWithGyroCalibrations.kLeftFlywheelVelocity,
+                                                PassWithGyroCalibrations.kLeftFlywheelVelocityTolerance,
+                                                leftFlywheel)
+                                                .withTimeout(
+                                                        PassWithGyroCalibrations.kLeftFlywheelTimeout)),
+                                new ParallelCommandGroup(
+                                        new LeftSetChamberVelocity(
+                                                PassWithGyroCalibrations.kLeftChamberVelocity,
+                                                PassWithGyroCalibrations.kLeftChamberVelocityTolerance,
+                                                true, leftChamber, leftTurret, leftHood, leftFlywheel))),
+                        new SequentialCommandGroup(
+                                new ParallelCommandGroup(
+                                        new RightMoveHoodToPosition(
+                                                PassWithGyroCalibrations.kLeftHoodAngle,
+                                                PassWithGyroCalibrations.kLeftHoodTolerance,
+                                                rightHood)
+                                                .withTimeout(
+                                                        PassWithGyroCalibrations.kLeftHoodTimeout),
+                                        new RightSetFlywheelVelocity(
+                                                () -> PassWithGyroCalibrations.kLeftFlywheelVelocity,
+                                                PassWithGyroCalibrations.kLeftFlywheelVelocityTolerance,
+                                                rightFlywheel)
+                                                .withTimeout(
+                                                        PassWithGyroCalibrations.kLeftFlywheelTimeout)),
+                                new ParallelCommandGroup(
+                                        new RightSetChamberVelocity(
+                                                PassWithGyroCalibrations.kLeftChamberVelocity,
+                                                PassWithGyroCalibrations.kLeftChamberVelocityTolerance,
+                                                true, rightChamber, rightTurret, rightHood, rightFlywheel)))).withTimeout(0.5),
+                    new SetIndexerVelocity(90, 10, indexer)));
 
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());

@@ -65,5 +65,6 @@
   "editor.formatOnSave": false,
   "java.checkstyle.configuration": "${workspaceFolder}/styleguide-frc4607.xml",
   "java.checkstyle.version": "10.3",
-  "java.dependency.enableDependencyCheckup": false
+  "java.dependency.enableDependencyCheckup": false,
+  "wpilib.autoStartRioLog": false
 }

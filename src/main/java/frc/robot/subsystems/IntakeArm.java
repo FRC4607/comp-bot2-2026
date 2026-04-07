@@ -71,9 +71,13 @@ public class IntakeArm extends SubsystemBase {
         m_encoderConfig.MagnetSensor.MagnetOffset = IntakeArmCalibrations.kEncoderOffset;
         m_encoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint
             = IntakeArmCalibrations.kEncoderDiscontinuityPoint;
-        m_encoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+        m_encoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.CounterClockwise_Positive;
 
         m_encoder.getConfigurator().apply(m_encoderConfig);
+    }
+
+    public void runOpenLoop(double dutyCycle) {
+        m_motor1.set(dutyCycle);
     }
 
     /**
@@ -83,6 +87,10 @@ public class IntakeArm extends SubsystemBase {
      */
     public void updateSetpoint(double newSetpoint) {
         m_motor1.setControl(m_request.withPosition(newSetpoint / 360));
+    }
+
+    public double getSetpoint() {
+        return m_motor1.getClosedLoopReference().getValueAsDouble() * 360;
     }
 
     /**

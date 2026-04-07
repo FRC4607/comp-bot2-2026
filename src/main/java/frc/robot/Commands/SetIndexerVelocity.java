@@ -16,9 +16,9 @@ public class SetIndexerVelocity extends Command {
     private Indexer m_indexer;
 
     /**
-     * A command to set the closed loop setpoint of the flywheel, in motor rotations per second.
+     * A command to set the closed loop setpoint of the leftFlywheel, in motor rotations per second.
      *
-     * @param setpoint  The desired speed of the flywheel (rot/s)
+     * @param setpoint  The desired speed of the leftFlywheel (rot/s)
      * @param tolerance The tolerance for error (rot/s)
      * @param indexer  The indexer to use
      */

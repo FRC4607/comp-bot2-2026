@@ -1,0 +1,109 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.27,
+        "y": 7.638
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.260784593437946,
+        "y": 7.2110242510699
+      },
+      "isLocked": false,
+      "linkedName": "Red Trench Depot"
+    },
+    {
+      "anchor": {
+        "x": 7.700699001426534,
+        "y": 6.1375320970042795
+      },
+      "prevControl": {
+        "x": 7.686121145399104,
+        "y": 7.318338435225945
+      },
+      "nextControl": {
+        "x": 7.726576319543511,
+        "y": 4.041469329529244
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.652667617689016,
+        "y": 5.749372325249644
+      },
+      "prevControl": {
+        "x": 6.597785955129885,
+        "y": 4.633445186547316
+      },
+      "nextControl": {
+        "x": 6.769115549215405,
+        "y": 8.117146932952926
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.27,
+        "y": 7.638
+      },
+      "prevControl": {
+        "x": 7.454864479315264,
+        "y": 7.159686162624822
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Red Trench Depot"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6396588486140837,
+      "rotationDegrees": -67.46601180537834
+    },
+    {
+      "waypointRelativePos": 2.3,
+      "rotationDegrees": -65.115141442607
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 2.2201215395003353,
+      "maxWaypointRelativePos": 2.633355840648208,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.28529644008395955
+  },
+  "reversed": false,
+  "folder": "RED PATHS",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.28529644008395955
+  },
+  "useDefaultConstraints": true
+}
