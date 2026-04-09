@@ -1,7 +1,11 @@
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Rotation;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class Constants {
@@ -12,7 +16,14 @@ public class Constants {
 
         /** Translation of the hub on the red side. */
         public static final Translation2d kRedHub = new Translation2d(Inches.of(469.078905), Inches.of(158.84375));
+
+        /** Corner of the field on the red depot side, for resetting pose. -16.75 inches X, +16.75 inches Y, to account for robot width and height. */
+        public static final Pose2d kRedDepotCorner = new Pose2d(Inches.of(634.42378), Inches.of(16.75), Rotation2d.k180deg);
+
+        /** Corner of the field on the blue depot side, for resetting pose. +16.75 inches X, -16.75 inches Y, to account for robot width and height.*/
+        public static final Pose2d kBlueDepotCorner = new Pose2d(Inches.of(16.75), Inches.of(300.9375), Rotation2d.kZero);
     }
+    // 16.75
 
     public class DrivetrainConstants {
         

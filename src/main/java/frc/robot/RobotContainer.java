@@ -193,6 +193,12 @@ public class RobotContainer {
         // reset the field-centric heading on start press
         joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
+        joystick.x().onTrue(
+            new ConditionalCommand(
+                new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kBlueDepotCorner)), 
+                new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kRedDepotCorner)), 
+                () -> DriverStation.getAlliance().get() == Alliance.Blue));
+
         drivetrain.registerTelemetry(logger::telemeterize);
 
         // joystick.back().onTrue(new MoveIntakeToPosition(0, 10, m_intakeArm)
