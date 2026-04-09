@@ -100,10 +100,6 @@ public class Robot extends TimedRobot {
                 LocalTime.of(0, 
                 (int) Math.abs(DriverStation.getMatchTime() / 60), 
                 (int) Math.abs(DriverStation.getMatchTime()) % 60).toString());
-
-            SmartDashboard.putNumber(ShootingCalibrations.kFlywheelDistanceMultPrefKey, 
-                Preferences.getDouble(ShootingCalibrations.kFlywheelDistanceMultPrefKey, 
-                    ShootingCalibrations.kFlywheelDistanceMult));
         }
     }
 
