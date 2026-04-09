@@ -3,9 +3,18 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.SignalLogger;
-
+import com.ctre.phoenix6.configs.CANdleConfiguration;
+import com.ctre.phoenix6.hardware.CANdle;
+import com.ctre.phoenix6.signals.StripTypeValue;
+import com.ctre.phoenix6.hardware.CANdle;
+import com.ctre.phoenix6.configs.CANdleConfiguration;
+import com.ctre.phoenix6.controls.RainbowAnimation;
+import com.ctre.phoenix6.controls.SolidColor;
+import com.ctre.phoenix6.controls.ColorFlowAnimation;
+import com.ctre.phoenix6.controls.FireAnimation;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -15,11 +24,13 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Calibrations.ShootingCalibrations;
 import frc.robot.Constants.FieldConstants;
 
+import java.io.ObjectInputFilter.Config;
 import java.time.LocalTime;
 import java.util.Optional;
 
@@ -33,9 +44,21 @@ public class Robot extends TimedRobot {
     private double m_countDown;
     public Translation2d m_targetHubPose;
     public double m_shotOffset;
+    private static final RGBWColor kWhite = new RGBWColor(255, 255, 255, 255).scaleBrightness(1);
+    
+    private CANdle candle;
+
 
     public Robot() {
         robotInstance = this;
+
+        candle = new CANdle(0, "kachow"); // Create CANdle with ID 0
+        //CANdleConfiguration config = new CANdleConfiguration();
+        
+        CANdleConfiguration config = new CANdleConfiguration();
+        config.LED.StripType = StripTypeValue.RGBW;
+        config.LED.BrightnessScalar = 1;
+        candle.getConfigurator().apply(config);
 
         m_robotContainer = new RobotContainer();
     }
@@ -43,6 +66,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
+        
 
         // Code to run every 0.02 seconds (20 milliseconds)
 
@@ -105,6 +129,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
+        
+        candle.setControl(new SolidColor(8, 96).withColor(kWhite));
+    
         m_robotContainer.m_leftTurret.resetsetPosition();
         m_robotContainer.m_rightTurret.resetsetPosition();
 
