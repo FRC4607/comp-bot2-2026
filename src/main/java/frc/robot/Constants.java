@@ -156,7 +156,32 @@ public class Constants {
         public static final double kRightTurretHypotenuse = 0.2744978;
 
     }
+    public static final class LEDConstants {
+    /** The CAN ID for the CANdle */
+    public static final int kCANdleID = 30;
 
+    /** LED Strip class to define start and length */
+    public static class LEDStrip {
+      public final int start;
+      public final int end;
+      public final int length;
+
+      public LEDStrip(int start, int length) {
+        this.start = start;
+        this.length = length;
+        this.end = start + length;
+      }
+    }
+  
+
+    /** Total number of RGB LEDs. */
+    public static final LEDStrip kRGBCANdle = new LEDStrip(0, 8);
+    public static final LEDStrip kRGBSection1 = new LEDStrip(8, 13);
+    public static final LEDStrip kRGBSection2 = new LEDStrip(21, 12);
+    public static final LEDStrip kRGBSection3 = new LEDStrip(33, 13);
+    public static final int kRGBCount = kRGBCANdle.length + kRGBSection1.length + kRGBSection2.length
+        + kRGBSection3.length; // 40
+    }
     /** Constants for the hood on the right turret. */
     public class RightHoodConstants {
 
