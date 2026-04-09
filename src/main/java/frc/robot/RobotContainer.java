@@ -63,6 +63,7 @@ import frc.robot.subsystems.LeftHood;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeWheels;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LeftTurret;
 import frc.robot.subsystems.RightChamber;
 import frc.robot.subsystems.RightFlywheel;
@@ -97,6 +98,7 @@ public class RobotContainer {
     public final RightHood m_rightHood = new RightHood();
     public final RightChamber m_rightChamber = new RightChamber();
     public final RightTurret m_rightTurret = new RightTurret();
+    public final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
