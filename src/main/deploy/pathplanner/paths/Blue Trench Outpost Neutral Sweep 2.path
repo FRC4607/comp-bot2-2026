@@ -32,32 +32,32 @@
     },
     {
       "anchor": {
-        "x": 5.876348074179743,
-        "y": 2.7605420827389446
+        "x": 6.186875891583452,
+        "y": 2.6829101283880177
       },
       "prevControl": {
-        "x": 6.600912981455065,
-        "y": 3.7180028530670475
+        "x": 6.1351212553495,
+        "y": 3.7697574893009986
       },
       "nextControl": {
-        "x": 5.531214216909699,
-        "y": 2.3044723427749583
+        "x": 6.2140803706507555,
+        "y": 2.1116160679746496
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.9004564907275316,
-        "y": 2.6182168330955777
+        "x": 4.27,
+        "y": 0.4685333333333336
       },
       "prevControl": {
-        "x": 3.4956348074179737,
-        "y": 2.320627674750357
+        "x": 7.040827389443652,
+        "y": 0.6127246790299581
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Blue Trench Outpost"
     }
   ],
   "rotationTargets": [
@@ -67,7 +67,11 @@
     },
     {
       "waypointRelativePos": 2.3,
-      "rotationDegrees": -177.4779492405879
+      "rotationDegrees": 161.5739653929384
+    },
+    {
+      "waypointRelativePos": 2.705756929637531,
+      "rotationDegrees": 36.38325926160953
     }
   ],
   "constraintZones": [
@@ -97,7 +101,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -145.24408744645862
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "BLUE PATHS",

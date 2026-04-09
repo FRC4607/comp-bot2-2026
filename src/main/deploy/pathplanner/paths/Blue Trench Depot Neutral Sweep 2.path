@@ -32,32 +32,32 @@
     },
     {
       "anchor": {
-        "x": 6.0057346647646215,
-        "y": 5.16713266761769
+        "x": 6.264507845934379,
+        "y": 5.387089871611984
       },
       "prevControl": {
-        "x": 6.46910469084075,
-        "y": 4.218327376128476
+        "x": 6.264507845934379,
+        "y": 4.261426533523538
       },
       "nextControl": {
-        "x": 5.7340228245363765,
-        "y": 5.723495007132667
+        "x": 6.264507845934379,
+        "y": 6.006255743532262
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.693437945791726,
-        "y": 5.0377460770328115
+        "x": 4.27,
+        "y": 7.638416547788873
       },
       "prevControl": {
-        "x": 2.9522111269614832,
-        "y": 5.425905848787448
+        "x": 6.575035663338087,
+        "y": 7.677232524964337
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Blue Trench Depot"
     }
   ],
   "rotationTargets": [
@@ -67,7 +67,11 @@
     },
     {
       "waypointRelativePos": 2.3,
-      "rotationDegrees": -177.4779492405879
+      "rotationDegrees": -146.7593670972434
+    },
+    {
+      "waypointRelativePos": 2.6737739872068302,
+      "rotationDegrees": -38.54947887036534
     }
   ],
   "constraintZones": [
@@ -97,7 +101,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 140.10216525235816
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "BLUE PATHS",
