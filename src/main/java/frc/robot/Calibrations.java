@@ -435,7 +435,7 @@ public class Calibrations {
     public class DepotTrenchShotCalibrations {
 
         /** LeftFlywheel Velocity. */
-        public static final double kLeftFlywheelVelocity = 59;
+        public static final double kLeftFlywheelVelocity = 62;
 
         /** LeftFlywheel Velocity Tolerance. */
         public static final double kLeftFlywheelVelocityTolerance = 1;
@@ -453,13 +453,13 @@ public class Calibrations {
         public static final double kLeftTurretAngleTolerance = 1;
 
         /** Chamber Velocity. */
-        public static final double kLeftChamberVelocity = 60;
+        public static final double kLeftChamberVelocity = 62;
 
         /** Chamber Velocity Tolerance. */
         public static final double kLeftChamberVelocityTolerance = 90;
 
         /** Right Flywheel Velocity. */
-        public static final double kRightFlywheelVelocity = 59;
+        public static final double kRightFlywheelVelocity = 62;
 
         /** Right Flywheel Velocity Tolerance. */
         public static final double kRightFlywheelVelocityTolerance = 1;
@@ -496,7 +496,7 @@ public class Calibrations {
     public class OutpostTrenchShotCalibrations {
 
         /** LeftFlywheel Velocity. */
-        public static final double kLeftFlywheelVelocity = 58;
+        public static final double kLeftFlywheelVelocity = 62;
 
         /** LeftFlywheel Velocity Tolerance. */
         public static final double kLeftFlywheelVelocityTolerance = 1;
@@ -520,7 +520,7 @@ public class Calibrations {
         public static final double kLeftChamberVelocityTolerance = 90;
 
         /** Right Flywheel Velocity. */
-        public static final double kRightFlywheelVelocity = 61;
+        public static final double kRightFlywheelVelocity = 62;
 
         /** Right Flywheel Velocity Tolerance. */
         public static final double kRightFlywheelVelocityTolerance = 1;
