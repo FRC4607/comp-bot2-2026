@@ -56,14 +56,14 @@ public class Robot extends TimedRobot {
         var brllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-br");
         var blllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-bl");
         if (brllMeasurement != null && brllMeasurement.tagCount >= 4) {
-            m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond, 0.7 + m_speeds.vyMetersPerSecond, 9999999));
+            m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
         } else if (brllMeasurement != null && brllMeasurement.tagCount > 0 && (brllMeasurement.avgTagDist < 2)) {
-            m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond, 0.7 + m_speeds.vyMetersPerSecond, 9999999));
+            m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
         }
         if (blllMeasurement != null && blllMeasurement.tagCount >= 4) {
-            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond, 0.7 + m_speeds.vyMetersPerSecond, 9999999));
+            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
         } else if (blllMeasurement != null && blllMeasurement.tagCount > 0 && (blllMeasurement.avgTagDist < 2)) {
-            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond, 0.7 + m_speeds.vyMetersPerSecond, 9999999));
+            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
         }
         
 
