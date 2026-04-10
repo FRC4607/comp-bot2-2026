@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     private double m_countDown;
     public Translation2d m_targetHubPose;
     public double m_shotOffset;
-    private static final RGBWColor kWhite = new RGBWColor(255, 255, 255, 255).scaleBrightness(1);
+    private static final RGBWColor kWhite = new RGBWColor(0, 0, 0, 0).scaleBrightness(1);
     
     private CANdle candle;
 
