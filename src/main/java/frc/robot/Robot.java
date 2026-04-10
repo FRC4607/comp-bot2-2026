@@ -44,7 +44,8 @@ public class Robot extends TimedRobot {
     private double m_countDown;
     public Translation2d m_targetHubPose;
     public double m_shotOffset;
-    private static final RGBWColor kWhite = new RGBWColor(0, 0, 0, 0).scaleBrightness(1);
+    private static final RGBWColor kWhite = new RGBWColor(0, 0, 0, 75).scaleBrightness(1);
+    private static final RGBWColor kGreen = new RGBWColor(0, 75, 0, 0).scaleBrightness(1);
     
     private CANdle candle;
 
@@ -56,7 +57,7 @@ public class Robot extends TimedRobot {
         //CANdleConfiguration config = new CANdleConfiguration();
         
         CANdleConfiguration config = new CANdleConfiguration();
-        config.LED.StripType = StripTypeValue.RGBW;
+        config.LED.StripType = StripTypeValue.GRBW;
         config.LED.BrightnessScalar = 1;
         candle.getConfigurator().apply(config);
 
@@ -79,15 +80,15 @@ public class Robot extends TimedRobot {
 
         var brllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-br");
         var blllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-bl");
-        if (brllMeasurement != null && brllMeasurement.tagCount >= 4) {
-            m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
-        } else if (brllMeasurement != null && brllMeasurement.tagCount > 0 && (brllMeasurement.avgTagDist < 2)) {
+        if (brllMeasurement != null && brllMeasurement.tagCount >= 2) {
+            m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + (brllMeasurement.avgTagDist / 2), 9999999));
+        } else if (brllMeasurement != null && brllMeasurement.tagCount > 0 && (brllMeasurement.avgTagDist < 4)) {
             m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
         }
-        if (blllMeasurement != null && blllMeasurement.tagCount >= 4) {
-            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
-        } else if (blllMeasurement != null && blllMeasurement.tagCount > 0 && (blllMeasurement.avgTagDist < 2)) {
-            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
+        if (blllMeasurement != null && blllMeasurement.tagCount >= 2) {
+            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + blllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + (blllMeasurement.avgTagDist / 2), 9999999));
+        } else if (blllMeasurement != null && blllMeasurement.tagCount > 0 && (blllMeasurement.avgTagDist < 4)) {
+            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + blllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + blllMeasurement.avgTagDist, 9999999));
         }
         
 
@@ -101,8 +102,10 @@ public class Robot extends TimedRobot {
                     && (blllMeasurement.avgTagDist < 2 || blllMeasurement.tagCount >= 4))) {
                 
                 SmartDashboard.putBoolean("Has Tags?", true);
+                candle.setControl(new SolidColor(8, 96).withColor(kGreen));
             } else {
                 SmartDashboard.putBoolean("Has Tags?", false);
+                candle.setControl(new SolidColor(8, 96).withColor(kWhite));
             }
         }
 
@@ -204,6 +207,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopExit() {
+        LimelightHelpers.triggerRewindCapture("limelight-br", 170);
+        LimelightHelpers.triggerRewindCapture("limelight-bl", 170);
+
         SignalLogger.stop();
     }
 
