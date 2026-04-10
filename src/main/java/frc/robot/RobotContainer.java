@@ -288,7 +288,8 @@ public class RobotContainer {
                 .alongWith(new LeftRunTurretOpenLoop(() -> 0, m_leftTurret)
                 .alongWith(new RightSetChamberVelocity(0, 90, false, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel)
                 .alongWith(new RightMoveHoodToPosition(0, 0.1, m_rightHood)
-                .alongWith(new RightRunTurretOpenLoop(() -> 0, m_rightTurret)))))))));
+                .alongWith(new RightRunTurretOpenLoop(() -> 0, m_rightTurret)
+                .alongWith(new RightRunFlywheelOpenLoop(() -> 0, m_rightFlywheel))))))))));
 
         joystick.axisGreaterThan(2, 0.8).onTrue(new DepotTrenchShot(m_leftFlywheel, m_leftHood, m_leftTurret, m_indexer, m_leftChamber, m_rightFlywheel, m_rightHood, m_rightTurret, m_rightChamber))
             .onFalse(new LeftRunFlywheelOpenLoop(() -> 0, m_leftFlywheel)
@@ -298,7 +299,8 @@ public class RobotContainer {
                 .alongWith(new LeftRunTurretOpenLoop(() ->0, m_leftTurret)
                 .alongWith(new RightSetChamberVelocity(0, 90, false, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel)
                 .alongWith(new RightMoveHoodToPosition(0, 0.1, m_rightHood)
-                .alongWith(new RightRunTurretOpenLoop(() -> 0, m_rightTurret)))))))));
+                .alongWith(new RightRunTurretOpenLoop(() -> 0, m_rightTurret)
+                .alongWith(new RightRunFlywheelOpenLoop(() -> 0, m_rightFlywheel))))))))));
 
         // // A command to find the radius of the wheels.
         // //joystick.povRight().onTrue(new WheelRadiusCalibration(drivetrain, drive));

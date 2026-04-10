@@ -97,9 +97,9 @@ public class Robot extends TimedRobot {
             SmartDashboard.putBoolean("Are Hoods Down?", m_robotContainer.m_leftHood.getPosition() < 0.5 && m_robotContainer.m_rightHood.getPosition() < 0.5);
 
             if ((brllMeasurement != null && brllMeasurement.tagCount > 0 
-                    && (brllMeasurement.avgTagDist < 2 || brllMeasurement.tagCount >= 4)) 
+                    && (brllMeasurement.avgTagDist < 4 || brllMeasurement.tagCount >= 2)) 
                     || (blllMeasurement != null && blllMeasurement.tagCount > 0 
-                    && (blllMeasurement.avgTagDist < 2 || blllMeasurement.tagCount >= 4))) {
+                    && (blllMeasurement.avgTagDist < 4 || blllMeasurement.tagCount >= 2))) {
                 
                 SmartDashboard.putBoolean("Has Tags?", true);
                 candle.setControl(new SolidColor(8, 96).withColor(kGreen));
