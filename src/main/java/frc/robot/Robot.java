@@ -132,8 +132,14 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledInit() {
-        
-        candle.setControl(new SolidColor(8, 96).withColor(kWhite));
+        // Max 96
+        // candle.setControl(new SolidColor(0, 3).withColor(kWhite));
+        // candle.setControl(new SolidColor(4, 7).withColor(kWhite));
+        // candle.setControl(new SolidColor(8, 28).withColor(kWhite));
+        // candle.setControl(new SolidColor(29, 48).withColor(kWhite));
+        // candle.setControl(new SolidColor(49, 68).withColor(kWhite));
+        // candle.setControl(new SolidColor(69, 88).withColor(kWhite));
+        // candle.setControl(new SolidColor(89, 96).withColor(kWhite));
     
         m_robotContainer.m_leftTurret.resetsetPosition();
         m_robotContainer.m_rightTurret.resetsetPosition();
