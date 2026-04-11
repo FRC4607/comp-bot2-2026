@@ -62,6 +62,9 @@ public class Robot extends TimedRobot {
         candle.getConfigurator().apply(config);
 
         m_robotContainer = new RobotContainer();
+
+        m_robotContainer.m_leftTurret.resetsetPosition();
+        m_robotContainer.m_rightTurret.resetsetPosition();
     }
 
     @Override
@@ -141,8 +144,8 @@ public class Robot extends TimedRobot {
         // candle.setControl(new SolidColor(69, 88).withColor(kWhite));
         // candle.setControl(new SolidColor(89, 96).withColor(kWhite));
     
-        m_robotContainer.m_leftTurret.resetsetPosition();
-        m_robotContainer.m_rightTurret.resetsetPosition();
+        // m_robotContainer.m_leftTurret.resetsetPosition();
+        // m_robotContainer.m_rightTurret.resetsetPosition();
 
         Preferences.initDouble(
             ShootingCalibrations.kLeftFlywheelDistanceMultPrefKey, ShootingCalibrations.kLeftFlywheelDistanceMult);
