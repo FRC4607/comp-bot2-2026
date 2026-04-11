@@ -13,6 +13,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Calibrations.IntakeArmCalibrations;
 import frc.robot.Calibrations.IntakeWheelCalibrations;
+import frc.robot.Calibrations.RightTurretCalibrations;
 import frc.robot.Constants.IntakeWheelConstants;
 
 /** Intake Wheels subsystem. */
@@ -23,6 +24,8 @@ public class IntakeWheels extends SubsystemBase {
     private final TalonFXConfiguration m_talonFXConfig;
 
     private final MotionMagicVelocityTorqueCurrentFOC m_request;
+
+    private boolean m_disable = false;
 
     /** Creates and configures the Intake Wheels subsystem. */
     public IntakeWheels() {
@@ -58,7 +61,12 @@ public class IntakeWheels extends SubsystemBase {
      * @param newSetpoint The new velocity (-90, 90)
      */
     public void updateSetpoint(double newSetpoint) {
-        m_motor1.setControl(m_request.withVelocity(newSetpoint));
+        if (!m_disable) {
+            m_motor1.setControl(m_request.withVelocity(newSetpoint));
+        } else {
+            m_motor1.set(0);
+        }
+
     }
 
     /**
@@ -67,7 +75,16 @@ public class IntakeWheels extends SubsystemBase {
      * @param dutyCycle Power to run at (-1, 1)
      */
     public void setOpenLoop(double dutyCycle) {
-        m_motor1.set(dutyCycle);
+        if (!m_disable) {
+            m_motor1.set(dutyCycle);
+        } else {
+            m_motor1.set(0);
+        }
+    }
+
+    public void disable(boolean disable) {
+        m_disable = disable;
+        m_motor1.set(0);
     }
 
     /**

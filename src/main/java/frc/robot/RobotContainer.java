@@ -146,6 +146,8 @@ public class RobotContainer {
         Trigger operatorRedL = new Trigger(() -> m_operator.getRawButton(1));
         Trigger operatorRedR = new Trigger(() -> m_operator.getRawButton(2));
 
+        Trigger operatorOrangeBL = new Trigger(() -> m_operator.getRawButton(5));
+
         Trigger operatorBlueL = new Trigger(() -> m_operator.getRawButton(7));
 
         Trigger operator3Way1Up = new Trigger(() -> m_operator.getRawButton(15));
@@ -307,6 +309,9 @@ public class RobotContainer {
 
         joystick.back().onTrue(new LeftZeroHoodSequence(m_leftHood)
             .alongWith(new RightZeroHoodSequence(m_rightHood)));
+
+        operatorOrangeBL.onTrue(new InstantCommand(() -> m_intakeWheels.disable(true)))
+            .onFalse(new InstantCommand(() -> m_intakeWheels.disable(false)));
 
         operator3Way1Up.onTrue(
             new InstantCommand(() -> m_leftChamber.disable(false))
