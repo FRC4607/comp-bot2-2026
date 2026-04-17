@@ -82,16 +82,64 @@ public class Robot extends TimedRobot {
         // LimelightHelpers.SetRobotOrientation("limelight-bl", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() + 180, 0, 0, 0, 0, 0);
 
         var brllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-br");
-        var blllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-bl");
         if (brllMeasurement != null && brllMeasurement.tagCount >= 2) {
             m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + (brllMeasurement.avgTagDist / 2), 9999999));
         } else if (brllMeasurement != null && brllMeasurement.tagCount > 0 && (brllMeasurement.avgTagDist < 4)) {
             m_robotContainer.drivetrain.addVisionMeasurement(brllMeasurement.pose, brllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 9999999));
         }
+        var blllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-bl");
         if (blllMeasurement != null && blllMeasurement.tagCount >= 2) {
-            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + blllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + (blllMeasurement.avgTagDist / 2), 9999999));
+            m_robotContainer.drivetrain.addVisionMeasurement(
+                blllMeasurement.pose, blllMeasurement.timestampSeconds, 
+                VecBuilder.fill(
+                    0.7 + m_speeds.vxMetersPerSecond + blllMeasurement.avgTagDist, 
+                    0.7 + m_speeds.vyMetersPerSecond + (blllMeasurement.avgTagDist / 2), 
+                    9999999));
         } else if (blllMeasurement != null && blllMeasurement.tagCount > 0 && (blllMeasurement.avgTagDist < 4)) {
-            m_robotContainer.drivetrain.addVisionMeasurement(blllMeasurement.pose, blllMeasurement.timestampSeconds, VecBuilder.fill(0.7 + m_speeds.vxMetersPerSecond + blllMeasurement.avgTagDist, 0.7 + m_speeds.vyMetersPerSecond + blllMeasurement.avgTagDist, 9999999));
+            m_robotContainer.drivetrain.addVisionMeasurement(
+                blllMeasurement.pose, 
+                blllMeasurement.timestampSeconds, 
+                VecBuilder.fill(
+                    0.7 + m_speeds.vxMetersPerSecond
+                     + blllMeasurement.avgTagDist, 
+                     0.7 + m_speeds.vyMetersPerSecond + blllMeasurement.avgTagDist, 
+                     9999999));
+        }
+        var mrllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-mr");
+        if (mrllMeasurement != null && mrllMeasurement.tagCount >= 2) {
+            m_robotContainer.drivetrain.addVisionMeasurement(
+                mrllMeasurement.pose, mrllMeasurement.timestampSeconds, 
+                VecBuilder.fill(
+                    0.7 + m_speeds.vxMetersPerSecond + mrllMeasurement.avgTagDist, 
+                    0.7 + m_speeds.vyMetersPerSecond + (mrllMeasurement.avgTagDist / 2), 
+                    9999999));
+        } else if (mrllMeasurement != null && mrllMeasurement.tagCount > 0 && (mrllMeasurement.avgTagDist < 4)) {
+            m_robotContainer.drivetrain.addVisionMeasurement(
+                mrllMeasurement.pose, 
+                mrllMeasurement.timestampSeconds, 
+                VecBuilder.fill(
+                    0.7 + m_speeds.vxMetersPerSecond
+                     + mrllMeasurement.avgTagDist, 
+                     0.7 + m_speeds.vyMetersPerSecond + mrllMeasurement.avgTagDist, 
+                     9999999));
+        }
+        var mlllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-ml");
+        if (mlllMeasurement != null && mlllMeasurement.tagCount >= 2) {
+            m_robotContainer.drivetrain.addVisionMeasurement(
+                mlllMeasurement.pose, mlllMeasurement.timestampSeconds, 
+                VecBuilder.fill(
+                    0.7 + m_speeds.vxMetersPerSecond + mlllMeasurement.avgTagDist, 
+                    0.7 + m_speeds.vyMetersPerSecond + (mlllMeasurement.avgTagDist / 2), 
+                    9999999));
+        } else if (mlllMeasurement != null && mlllMeasurement.tagCount > 0 && (mlllMeasurement.avgTagDist < 4)) {
+            m_robotContainer.drivetrain.addVisionMeasurement(
+                mlllMeasurement.pose, 
+                mlllMeasurement.timestampSeconds, 
+                VecBuilder.fill(
+                    0.7 + m_speeds.vxMetersPerSecond
+                     + mlllMeasurement.avgTagDist, 
+                     0.7 + m_speeds.vyMetersPerSecond + mlllMeasurement.avgTagDist, 
+                     9999999));
         }
         
 
@@ -102,7 +150,11 @@ public class Robot extends TimedRobot {
             if ((brllMeasurement != null && brllMeasurement.tagCount > 0 
                     && (brllMeasurement.avgTagDist < 4 || brllMeasurement.tagCount >= 2)) 
                     || (blllMeasurement != null && blllMeasurement.tagCount > 0 
-                    && (blllMeasurement.avgTagDist < 4 || blllMeasurement.tagCount >= 2))) {
+                    && (blllMeasurement.avgTagDist < 4 || blllMeasurement.tagCount >= 2))
+                    || (mrllMeasurement != null && mrllMeasurement.tagCount > 0 
+                    && (mrllMeasurement.avgTagDist < 4 || mrllMeasurement.tagCount >= 2))
+                    || (mlllMeasurement != null && mlllMeasurement.tagCount > 0 
+                    && (mlllMeasurement.avgTagDist < 4 || mlllMeasurement.tagCount >= 2))) {
                 
                 SmartDashboard.putBoolean("Has Tags?", true);
                 candle.setControl(new SolidColor(8, 96).withColor(kGreen));
