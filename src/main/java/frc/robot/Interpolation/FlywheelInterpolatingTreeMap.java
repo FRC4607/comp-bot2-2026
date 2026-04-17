@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.Interpolation;
 
 import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.interpolation.InverseInterpolator;
