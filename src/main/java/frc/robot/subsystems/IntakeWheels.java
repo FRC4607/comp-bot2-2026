@@ -62,6 +62,15 @@ public class IntakeWheels extends SubsystemBase {
     }
 
     /**
+     * Gets the current velocity setpoint of the intake wheels.
+     *
+     * @return The current velocity setpoint
+     */
+    public double getSetpoint() {
+        return m_request.Velocity;
+    }
+
+    /**
      * Sets the open loop power of the intake wheels.
      *
      * @param dutyCycle Power to run at (-1, 1)
@@ -77,6 +86,15 @@ public class IntakeWheels extends SubsystemBase {
      */
     public double getVelocity() {
         return m_motor1.getVelocity().getValueAsDouble();
+    }
+
+    /**
+     * Gets the current torque of the intake wheels motor.
+     *
+     * @return The current torque in Nm
+     */
+    public double getStatorCurrent() {
+        return m_motor1.getStatorCurrent().getValueAsDouble();
     }
 
     @Override

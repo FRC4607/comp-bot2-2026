@@ -57,7 +57,7 @@ public class Calibrations {
     public class IntakeWheelCalibrations {
 
         /** Max acceleration of the mechanism. */
-        public static final double kMaxAcceleration = 90;
+        public static final double kMaxAcceleration = 200;
 
         /** Static feedforward. */
         public static final double kS = 24;
@@ -76,6 +76,12 @@ public class Calibrations {
 
         /** Maximum amperage of the motor. */
         public static final double kMaxAmperage = 80;
+
+        /** When using the SetIntakeWheelsVelocity method, take the last n readings of StatorCurrent from the motor. */
+        public static final int kCurrentLimitSamplings = 10;
+
+        /** Threshold for the mean current draw of the intake motors, over the last n samples. */
+        public static final double kMeanCurrentLimit = 30;
     }
 
     /** Calibrations for the spindexer. */
