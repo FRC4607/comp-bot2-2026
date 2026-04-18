@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import frc.robot.Calibrations.ShootingCalibrations;
 import frc.robot.Commands.DepotTrenchShot;
+import frc.robot.Commands.GeneralPass;
 import frc.robot.Commands.HubShot;
 import frc.robot.Commands.LeftMoveHoodToPosition;
 import frc.robot.Commands.LeftMoveTurretToPosition;
@@ -195,8 +196,8 @@ public class RobotContainer {
 
         joystick.x().onTrue(
             new ConditionalCommand(
-                new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kBlueDepotCorner)), 
-                new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kRedDepotCorner)), 
+                new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kBlueZeroCorner)), 
+                new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kRedZeroCorner)), 
                 () -> DriverStation.getAlliance().get() == Alliance.Blue));
 
         drivetrain.registerTelemetry(logger::telemeterize);
@@ -235,7 +236,7 @@ public class RobotContainer {
             new InstantCommand(() -> MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 0.2)
             .alongWith(new InstantCommand(() -> MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond) * 0.2))
             .alongWith(new ConditionalCommand(
-                new PassWithGyro(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
+                new GeneralPass(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
                 new GeneralShot(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
                 () -> (drivetrain.getState().Pose.getX() > FieldConstants.kBlueHub.getX() && DriverStation.getAlliance().get() == Alliance.Blue) || (drivetrain.getState().Pose.getX() < FieldConstants.kRedHub.getX() && DriverStation.getAlliance().get() == Alliance.Red))))
                 .onFalse(new LeftRunFlywheelOpenLoop(() -> 0, m_leftFlywheel)

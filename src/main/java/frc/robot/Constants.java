@@ -11,17 +11,34 @@ import edu.wpi.first.math.geometry.Translation2d;
 public class Constants {
 
     public class FieldConstants {
+
+        /** Center of the field. */
+        public static final Translation2d kFieldMiddle = new Translation2d(Inches.of(325.58689), Inches.of(158.84375));
+
         /** Translation of the hub on the blue side. */
         public static final Translation2d kBlueHub = new Translation2d(Inches.of(182.143595), Inches.of(158.84375));
 
         /** Translation of the hub on the red side. */
         public static final Translation2d kRedHub = new Translation2d(Inches.of(469.078905), Inches.of(158.84375));
 
-        /** Corner of the field on the red depot side, for resetting pose. -16.75 inches X, +16.75 inches Y, to account for robot width and height. */
-        public static final Pose2d kRedDepotCorner = new Pose2d(Inches.of(634.42378), Inches.of(16.75), Rotation2d.k180deg);
+        /** Passing target for red depot corner. -46.75 inches X, +46.75 inches Y, to account for passing margin. */
+        public static final Translation2d kRedDepotPassCorner = new Translation2d(Inches.of(604.42378), Inches.of(46.75));
 
-        /** Corner of the field on the blue depot side, for resetting pose. +16.75 inches X, -16.75 inches Y, to account for robot width and height.*/
-        public static final Pose2d kBlueDepotCorner = new Pose2d(Inches.of(16.75), Inches.of(300.9375), Rotation2d.kZero);
+        /** Passing target for red outpost corner. -46.75 inches X, +46.75 inches Y, to account for passing margin. */
+        public static final Translation2d kRedOutpostPassCorner = new Translation2d(Inches.of(604.42378), Inches.of(270.9375));
+
+        /** Passing target for blue depot corner. +46.75 inches X, -46.75 inches Y, to account for passing margin.*/
+        public static final Translation2d kBlueDepotPassCorner = new Translation2d(Inches.of(46.75), Inches.of(270.9375));
+        
+        /** Passing target for blue outpost corner. +46.75 inches X, -46.75 inches Y, to account for passing margin.*/
+        public static final Translation2d kBlueOutpostPassCorner = new Translation2d(Inches.of(46.75), Inches.of(46.75));
+
+        /** Corner of the field on the red depot side, for resetting pose. -16.75 inches X, +16.75 inches Y, to account for robot width. */
+        public static final Pose2d kRedZeroCorner = new Pose2d(Inches.of(634.42378), Inches.of(16.75), Rotation2d.k180deg);
+
+        /** Corner of the field on the blue depot side, for resetting pose. +16.75 inches X, -16.75 inches Y, to account for robot width.*/
+        public static final Pose2d kBlueZeroCorner = new Pose2d(Inches.of(16.75), Inches.of(300.9375), Rotation2d.kZero);
+
     }
     // 16.75
 
