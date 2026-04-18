@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Calibrations.ShootingCalibrations;
 import frc.robot.Constants.FieldConstants;
+import frc.robot.subsystems.LEDSubsystem;
 
 import java.io.ObjectInputFilter.Config;
 import java.time.LocalTime;
@@ -44,22 +45,13 @@ public class Robot extends TimedRobot {
     private double m_countDown;
     public Translation2d m_targetHubPose;
     public double m_shotOffset;
-    private static final RGBWColor kWhite = new RGBWColor(0, 0, 0, 75).scaleBrightness(1);
-    private static final RGBWColor kGreen = new RGBWColor(0, 75, 0, 0).scaleBrightness(1);
-    
-    private CANdle candle;
 
+    private boolean m_hasTags;
+
+    public Alliance m_alliance = null;
 
     public Robot() {
         robotInstance = this;
-
-        candle = new CANdle(0, "kachow"); // Create CANdle with ID 0
-        //CANdleConfiguration config = new CANdleConfiguration();
-        
-        CANdleConfiguration config = new CANdleConfiguration();
-        config.LED.StripType = StripTypeValue.GRBW;
-        config.LED.BrightnessScalar = 1;
-        candle.getConfigurator().apply(config);
 
         m_robotContainer = new RobotContainer();
 
@@ -73,105 +65,111 @@ public class Robot extends TimedRobot {
         
 
         // Code to run every 0.02 seconds (20 milliseconds)
+        if (!isDisabled()) {
+            m_loopCounter++;
 
-        m_loopCounter++;
+            var m_speeds = m_robotContainer.drivetrain.getState().Speeds.fromRobotRelativeSpeeds(m_robotContainer.drivetrain.getState().Speeds, m_robotContainer.drivetrain.getState().Pose.getRotation());
 
-        var m_speeds = m_robotContainer.drivetrain.getState().Speeds.fromRobotRelativeSpeeds(m_robotContainer.drivetrain.getState().Speeds, m_robotContainer.drivetrain.getState().Pose.getRotation());
+            // LimelightHelpers.SetRobotOrientation("limelight-br", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() + 180, 0, 0, 0, 0, 0);
+            // LimelightHelpers.SetRobotOrientation("limelight-bl", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() + 180, 0, 0, 0, 0, 0);
 
-        // LimelightHelpers.SetRobotOrientation("limelight-br", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() + 180, 0, 0, 0, 0, 0);
-        // LimelightHelpers.SetRobotOrientation("limelight-bl", m_robotContainer.drivetrain.getState().Pose.getRotation().getDegrees() + 180, 0, 0, 0, 0, 0);
+            m_hasTags = false;
 
-        var brllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-br");
-        if (brllMeasurement != null && brllMeasurement.tagCount >= 2) {
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                brllMeasurement.pose, 
-                brllMeasurement.timestampSeconds, 
-                VecBuilder.fill(
-                    0.7 + m_speeds.vxMetersPerSecond + (brllMeasurement.avgTagDist / 2), 
-                    0.7 + m_speeds.vyMetersPerSecond + (brllMeasurement.avgTagDist / 2), 
-                    9999999));
-        } else if (brllMeasurement != null && brllMeasurement.tagCount > 0 && (brllMeasurement.avgTagDist < 2)) {
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                brllMeasurement.pose, brllMeasurement.timestampSeconds, 
-                VecBuilder.fill(
-                    0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 
-                    0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 
-                    9999999));
-        }
-        var blllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-bl");
-        if (blllMeasurement != null && blllMeasurement.tagCount >= 2) {
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                blllMeasurement.pose, blllMeasurement.timestampSeconds, 
-                VecBuilder.fill(
-                    0.7 + m_speeds.vxMetersPerSecond + (blllMeasurement.avgTagDist / 2), 
-                    0.7 + m_speeds.vyMetersPerSecond + (blllMeasurement.avgTagDist / 2), 
-                    9999999));
-        } else if (blllMeasurement != null && blllMeasurement.tagCount > 0 && (blllMeasurement.avgTagDist < 2)) {
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                blllMeasurement.pose, 
-                blllMeasurement.timestampSeconds, 
-                VecBuilder.fill(
-                    0.7 + m_speeds.vxMetersPerSecond
-                     + blllMeasurement.avgTagDist, 
-                     0.7 + m_speeds.vyMetersPerSecond + blllMeasurement.avgTagDist, 
-                     9999999));
-        }
-        var mrllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-mr");
-        if (mrllMeasurement != null && mrllMeasurement.tagCount >= 2) {
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                mrllMeasurement.pose, mrllMeasurement.timestampSeconds, 
-                VecBuilder.fill(
-                    0.7 + m_speeds.vxMetersPerSecond + (mrllMeasurement.avgTagDist / 2), 
-                    0.7 + m_speeds.vyMetersPerSecond + (mrllMeasurement.avgTagDist / 2), 
-                    9999999));
-        } else if (mrllMeasurement != null && mrllMeasurement.tagCount > 0 && (mrllMeasurement.avgTagDist < 2)) {
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                mrllMeasurement.pose, 
-                mrllMeasurement.timestampSeconds, 
-                VecBuilder.fill(
-                    0.7 + m_speeds.vxMetersPerSecond
-                     + mrllMeasurement.avgTagDist, 
-                     0.7 + m_speeds.vyMetersPerSecond + mrllMeasurement.avgTagDist, 
-                     9999999));
-        }
-        var mlllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-ml");
-        if (mlllMeasurement != null && mlllMeasurement.tagCount >= 2) {
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                mlllMeasurement.pose, mlllMeasurement.timestampSeconds, 
-                VecBuilder.fill(
-                    0.7 + m_speeds.vxMetersPerSecond + (mlllMeasurement.avgTagDist / 2), 
-                    0.7 + m_speeds.vyMetersPerSecond + (mlllMeasurement.avgTagDist / 2), 
-                    9999999));
-        } else if (mlllMeasurement != null && mlllMeasurement.tagCount > 0 && (mlllMeasurement.avgTagDist < 2)) {
-            m_robotContainer.drivetrain.addVisionMeasurement(
-                mlllMeasurement.pose, 
-                mlllMeasurement.timestampSeconds, 
-                VecBuilder.fill(
-                    0.7 + m_speeds.vxMetersPerSecond
-                     + mlllMeasurement.avgTagDist, 
-                     0.7 + m_speeds.vyMetersPerSecond + mlllMeasurement.avgTagDist, 
-                     9999999));
-        }
-        
+            var mrllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-mr");
+            if (mrllMeasurement != null && mrllMeasurement.tagCount >= 2) {
+                m_robotContainer.drivetrain.addVisionMeasurement(
+                    mrllMeasurement.pose, mrllMeasurement.timestampSeconds, 
+                    VecBuilder.fill(
+                        0.7 + m_speeds.vxMetersPerSecond + (mrllMeasurement.avgTagDist / 2), 
+                        0.7 + m_speeds.vyMetersPerSecond + (mrllMeasurement.avgTagDist / 2), 
+                        9999999));
+                m_hasTags = true;
+            } else if (mrllMeasurement != null && mrllMeasurement.tagCount > 0 && (mrllMeasurement.avgTagDist < 2)) {
+                m_robotContainer.drivetrain.addVisionMeasurement(
+                    mrllMeasurement.pose, 
+                    mrllMeasurement.timestampSeconds, 
+                    VecBuilder.fill(
+                        0.7 + m_speeds.vxMetersPerSecond
+                        + mrllMeasurement.avgTagDist, 
+                        0.7 + m_speeds.vyMetersPerSecond + mrllMeasurement.avgTagDist, 
+                        9999999));
+                m_hasTags = true;
+            }
 
-        // Code to run every 0.2 seconds (200 milliseconds)
-        if ((m_loopCounter % 10) == 0) {
-            SmartDashboard.putBoolean("Are Hoods Down?", m_robotContainer.m_leftHood.getPosition() < 0.5 && m_robotContainer.m_rightHood.getPosition() < 0.5);
+            var brllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-br");
+            if (brllMeasurement != null && brllMeasurement.tagCount >= 2) {
+                m_robotContainer.drivetrain.addVisionMeasurement(
+                    brllMeasurement.pose, 
+                    brllMeasurement.timestampSeconds, 
+                    VecBuilder.fill(
+                        0.7 + m_speeds.vxMetersPerSecond + (brllMeasurement.avgTagDist / 2), 
+                        0.7 + m_speeds.vyMetersPerSecond + (brllMeasurement.avgTagDist / 2), 
+                        9999999));
+                m_hasTags = true;
+            } else if (brllMeasurement != null && brllMeasurement.tagCount > 0 && (brllMeasurement.avgTagDist < 2)) {
+                m_robotContainer.drivetrain.addVisionMeasurement(
+                    brllMeasurement.pose, brllMeasurement.timestampSeconds, 
+                    VecBuilder.fill(
+                        0.7 + m_speeds.vxMetersPerSecond + brllMeasurement.avgTagDist, 
+                        0.7 + m_speeds.vyMetersPerSecond + brllMeasurement.avgTagDist, 
+                        9999999));
+                m_hasTags = true;
+            }
 
-            if ((brllMeasurement != null && brllMeasurement.tagCount > 0 
-                    && (brllMeasurement.avgTagDist < 2 || brllMeasurement.tagCount >= 2)) 
-                    || (blllMeasurement != null && blllMeasurement.tagCount > 0 
-                    && (blllMeasurement.avgTagDist < 2 || blllMeasurement.tagCount >= 2))
-                    || (mrllMeasurement != null && mrllMeasurement.tagCount > 0 
-                    && (mrllMeasurement.avgTagDist < 2 || mrllMeasurement.tagCount >= 2))
-                    || (mlllMeasurement != null && mlllMeasurement.tagCount > 0 
-                    && (mlllMeasurement.avgTagDist < 2 || mlllMeasurement.tagCount >= 2))) {
-                
-                SmartDashboard.putBoolean("Has Tags?", true);
-                candle.setControl(new SolidColor(8, 96).withColor(kGreen));
+            var blllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-bl");
+            if (blllMeasurement != null && blllMeasurement.tagCount >= 2) {
+                m_robotContainer.drivetrain.addVisionMeasurement(
+                    blllMeasurement.pose, blllMeasurement.timestampSeconds, 
+                    VecBuilder.fill(
+                        0.7 + m_speeds.vxMetersPerSecond + (blllMeasurement.avgTagDist / 2), 
+                        0.7 + m_speeds.vyMetersPerSecond + (blllMeasurement.avgTagDist / 2), 
+                        9999999));
+                m_hasTags = true;
+            } else if (blllMeasurement != null && blllMeasurement.tagCount > 0 && (blllMeasurement.avgTagDist < 2)) {
+                m_robotContainer.drivetrain.addVisionMeasurement(
+                    blllMeasurement.pose, 
+                    blllMeasurement.timestampSeconds, 
+                    VecBuilder.fill(
+                        0.7 + m_speeds.vxMetersPerSecond
+                        + blllMeasurement.avgTagDist, 
+                        0.7 + m_speeds.vyMetersPerSecond + blllMeasurement.avgTagDist, 
+                        9999999));
+                m_hasTags = true;
+            }
+
+            var mlllMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight-ml");
+            if (mlllMeasurement != null && mlllMeasurement.tagCount >= 2) {
+                m_robotContainer.drivetrain.addVisionMeasurement(
+                    mlllMeasurement.pose, mlllMeasurement.timestampSeconds, 
+                    VecBuilder.fill(
+                        0.7 + m_speeds.vxMetersPerSecond + (mlllMeasurement.avgTagDist / 2), 
+                        0.7 + m_speeds.vyMetersPerSecond + (mlllMeasurement.avgTagDist / 2), 
+                        9999999));
+                m_hasTags = true;
+            } else if (mlllMeasurement != null && mlllMeasurement.tagCount > 0 && (mlllMeasurement.avgTagDist < 2)) {
+                m_robotContainer.drivetrain.addVisionMeasurement(
+                    mlllMeasurement.pose, 
+                    mlllMeasurement.timestampSeconds, 
+                    VecBuilder.fill(
+                        0.7 + m_speeds.vxMetersPerSecond
+                        + mlllMeasurement.avgTagDist, 
+                        0.7 + m_speeds.vyMetersPerSecond + mlllMeasurement.avgTagDist, 
+                        9999999));
+                m_hasTags = true;
+            }
+
+            if (m_hasTags) {
+                m_robotContainer.m_ledSubsystem.set(8, 20, 0, LEDSubsystem.kTwinkleGreen);
             } else {
-                SmartDashboard.putBoolean("Has Tags?", false);
-                candle.setControl(new SolidColor(8, 96).withColor(kWhite));
+                m_robotContainer.m_ledSubsystem.set(8, 20, 0, LEDSubsystem.kSolidWhite);
+            }
+            
+
+            // Code to run every 0.2 seconds (200 milliseconds)
+            if ((m_loopCounter % 10) == 0) {
+                SmartDashboard.putBoolean("Are Hoods Down?", m_robotContainer.m_leftHood.getPosition() < 0.5 && m_robotContainer.m_rightHood.getPosition() < 0.5);
+
+                SmartDashboard.putBoolean("Has Tags?", m_hasTags);
             }
         }
 
@@ -216,7 +214,25 @@ public class Robot extends TimedRobot {
 
     @Override
     public void disabledPeriodic() {
-        
+
+        if (DriverStation.isDSAttached()) {
+            
+            m_alliance = DriverStation.getAlliance().get();
+            if (m_alliance != null) {
+                if (m_robotContainer.getAutonomousCommand() == null) {
+                    m_robotContainer.m_ledSubsystem.set(0, 20, 0, LEDSubsystem.kStrobeFastPurple);
+                } else {
+                    if (m_alliance == Alliance.Red) {
+                        m_robotContainer.m_ledSubsystem.set(0, 20, 0, LEDSubsystem.kFadeRed);
+                    } else {
+                        m_robotContainer.m_ledSubsystem.set(0, 20, 0, LEDSubsystem.kFadeBlue);
+                    }
+                }
+            }
+            
+        } else {
+            m_robotContainer.m_ledSubsystem.set(0, 20, 0, LEDSubsystem.kFadePurple);
+        }
     }
 
     @Override

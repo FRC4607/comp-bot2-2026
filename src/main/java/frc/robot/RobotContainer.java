@@ -64,6 +64,7 @@ import frc.robot.subsystems.LeftHood;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeWheels;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LeftTurret;
 import frc.robot.subsystems.RightChamber;
 import frc.robot.subsystems.RightFlywheel;
@@ -98,6 +99,8 @@ public class RobotContainer {
     public final RightHood m_rightHood = new RightHood();
     public final RightChamber m_rightChamber = new RightChamber();
     public final RightTurret m_rightTurret = new RightTurret();
+
+    public final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
@@ -223,8 +226,8 @@ public class RobotContainer {
         operatorBlueL.onFalse(new MoveIntakeToPosition(0, 10, m_intakeArm)
             .alongWith(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)));
 
-        joystick.leftBumper().onTrue(new SetIntakeWheelsVelocity(-10, 10, m_intakeWheels)
-                .alongWith(new SetIndexerVelocity(-30, 10, m_indexer))
+        joystick.leftBumper().onTrue(new SetIntakeWheelsVelocity(-90, 10, m_intakeWheels)
+                .alongWith(new SetIndexerVelocity(-90, 10, m_indexer))
                 .alongWith(new LeftSetChamberVelocity(-10, 10, false, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel))
                 .alongWith(new RightSetChamberVelocity(-10, 10, false, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel)))
             .onFalse(new SetIntakeWheelsVelocity(0, 10, m_intakeWheels)
@@ -233,8 +236,8 @@ public class RobotContainer {
                 .alongWith(new RightSetChamberOpenLoop(() -> 0, m_rightChamber)));
 
         joystick.y().onTrue(
-            new InstantCommand(() -> MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 0.2)
-            .alongWith(new InstantCommand(() -> MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond) * 0.2))
+            new InstantCommand(() -> MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 0.6)
+            .alongWith(new InstantCommand(() -> MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond) * 0.6))
             .alongWith(new ConditionalCommand(
                 new GeneralPass(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
                 new GeneralShot(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),

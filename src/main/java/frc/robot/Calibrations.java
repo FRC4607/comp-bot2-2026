@@ -698,13 +698,13 @@ public class Calibrations {
          * Correction amount for velocity offset. 
          * Increasing will make it counter velocity more overall.
          */
-        public static final double kVelocityOffsetMult = 0.2;
+        public static final double kVelocityOffsetMult = 0.15;
 
         /** 
          * Multiplier for distance, to use in velocity offset. Increasing this value will make it
          * counter velocity more at long range.
          */
-        public static final double kVelocityDistanceMult = 1.5; // 1.1
+        public static final double kVelocityDistanceMult = 1.6; // 1.1
         
         /** 
          * Constant to add to the distance, after multiplier, to use in the velocity offset.

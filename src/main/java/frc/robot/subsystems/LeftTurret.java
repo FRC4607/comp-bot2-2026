@@ -182,7 +182,7 @@ public class LeftTurret extends SubsystemBase {
      * @return The setpoint in degrees.
      */
     public double getSetpoint() {
-        return m_motor.getClosedLoopReference().getValueAsDouble() * 360;
+        return m_request.Position * 360;
     }
 
     /**
