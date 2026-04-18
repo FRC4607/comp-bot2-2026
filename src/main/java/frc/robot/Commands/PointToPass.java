@@ -25,7 +25,9 @@ import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.LeftTurretConstants;
 import frc.robot.Constants.RightTurretConstants;
 import frc.robot.Interpolation.FlywheelInterpolatingTreeMap;
+import frc.robot.Interpolation.FlywheelPassingTreeMap;
 import frc.robot.Interpolation.HoodInterpolatingTreeMap;
+import frc.robot.Interpolation.HoodPassingTreeMap;
 import frc.robot.Robot;
 import frc.robot.Calibrations.ShootingCalibrations;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -58,8 +60,8 @@ public class PointToPass extends Command {
     private Transform2d m_leftTurretTransform2d;
     private Transform2d m_rightTurretTransform2d;
 
-    private HoodInterpolatingTreeMap m_hoodMap;
-    private FlywheelInterpolatingTreeMap m_flywheelMap;
+    private HoodPassingTreeMap m_hoodMap;
+    private FlywheelPassingTreeMap m_flywheelMap;
 
     private double m_drivetrainAngle;
     
@@ -88,8 +90,8 @@ public class PointToPass extends Command {
         m_leftTurretTransform2d = new Transform2d(new Translation2d(-0.206375, 0.180975), new Rotation2d(0));
         m_rightTurretTransform2d = new Transform2d(new Translation2d(-0.206375, -0.180975), new Rotation2d(0));
 
-        m_hoodMap = HoodInterpolatingTreeMap.createDefaultMap();
-        m_flywheelMap = FlywheelInterpolatingTreeMap.createDefaultMap();
+        m_hoodMap = HoodPassingTreeMap.createDefaultMap();
+        m_flywheelMap = FlywheelPassingTreeMap.createDefaultMap();
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_leftTurret, m_leftHood, m_leftFlywheel);
     }
@@ -229,6 +231,8 @@ public class PointToPass extends Command {
 
         // Include the operater-entered value in the signal logger for checking later
         SignalLogger.writeDouble("Shooting/RightFlywheelMult", SmartDashboard.getNumber(ShootingCalibrations.kRightFlywheelDistanceMultPrefKey, ShootingCalibrations.kRightFlywheelDistanceMult));
+
+        SmartDashboard.putNumber("right distance", m_rightDistance);
 
         // SmartDashboard.putNumber("Right Turret Distance To Hub", m_rightDistance);
     }

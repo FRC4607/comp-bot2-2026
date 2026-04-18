@@ -60,8 +60,15 @@ public class RightFlywheel extends SubsystemBase {
 
     public void updateSetpoint(double newSetpoint) {
         if (!m_disable) {
-            m_motor1.setControl(m_request
+
+            // Limits to 110 rps
+            if (newSetpoint > 110) {
+                m_motor1.setControl(m_request
+                    .withVelocity(110));
+            } else {
+                m_motor1.setControl(m_request
                     .withVelocity(newSetpoint));
+            }
         } else {
             m_motor1.set(0);
         }
