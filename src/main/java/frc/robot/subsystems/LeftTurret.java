@@ -200,4 +200,8 @@ public class LeftTurret extends SubsystemBase {
         m_disable = disable;
     }
 
+    public boolean isDisabled() {
+        return m_disable;
+    }
+
 }

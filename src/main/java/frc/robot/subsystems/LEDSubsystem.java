@@ -27,6 +27,11 @@ public class LEDSubsystem extends SubsystemBase {
 
     private final CANdleConfiguration m_config;
 
+    private ControlRequest m_slot0;
+    private ControlRequest m_slot1;
+    private ControlRequest m_slot2;
+    private ControlRequest m_slot3;
+
     private static final RGBWColor kWhite = new RGBWColor(255, 255, 255, 0);
     private static final RGBWColor kRed = new RGBWColor(255, 0, 0, 0);
     private static final RGBWColor kGreen = new RGBWColor(0, 255, 0, 0);
@@ -58,8 +63,8 @@ public class LEDSubsystem extends SubsystemBase {
     public static final SingleFadeAnimation kFadeBlue = 
         new SingleFadeAnimation(0, 0).withColor(kBlue).withFrameRate(50);
 
-    public static final TwinkleAnimation kTwinkleGreen = 
-        new TwinkleAnimation(0, 0).withColor(kGreen).withFrameRate(200);
+    public static final StrobeAnimation kStrobeGreen = 
+        new StrobeAnimation(0, 0).withColor(kGreen).withFrameRate(10);
 
 
     /** Creates a new LEDSubsystem. */
@@ -87,47 +92,231 @@ public class LEDSubsystem extends SubsystemBase {
      * @param slot The animation slot to use.
      * @param pattern Control Request to use.
      */
-    public void set(int startIndex, int endIndex, int slot, SolidColor pattern) {
+    public void set(int slot, SolidColor pattern) {
+
+        if (slot == 0) {
+            if (m_slot0 != pattern) {
+                m_candle.setControl(new EmptyAnimation(0));
+                m_candle.setControl(pattern.withLEDStartIndex(0).withLEDEndIndex(7));
+                m_slot0 = pattern;
+            }
+        } else if (slot == 1) {
+            if (m_slot1 != pattern) {
+                m_candle.setControl(new EmptyAnimation(1));
+                m_candle.setControl(pattern.withLEDStartIndex(8).withLEDEndIndex(12));
+                m_slot1 = pattern;
+            }
+        } else if (slot == 2) {
+            if (m_slot2 != pattern) {
+                m_candle.setControl(new EmptyAnimation(2));
+                m_candle.setControl(pattern.withLEDStartIndex(13).withLEDEndIndex(15));
+                m_slot2 = pattern;
+            }
+        } else if (slot == 3) {
+            if (m_slot3 != pattern) {
+                m_candle.setControl(new EmptyAnimation(3));
+                m_candle.setControl(pattern.withLEDStartIndex(16).withLEDEndIndex(20));
+                m_slot3 = pattern;
+            }
+        } else {
+            if (m_slot0 != pattern) {
+                m_candle.setControl(new EmptyAnimation(0));
+                m_candle.setControl(pattern.withLEDStartIndex(0).withLEDEndIndex(7));
+                m_slot0 = pattern;
+            }
+            if (m_slot1 != pattern) {
+                m_candle.setControl(new EmptyAnimation(1));
+                m_candle.setControl(pattern.withLEDStartIndex(8).withLEDEndIndex(12));
+                m_slot1 = pattern;
+            }
+            if (m_slot2 != pattern) {
+                m_candle.setControl(new EmptyAnimation(2));
+                m_candle.setControl(pattern.withLEDStartIndex(13).withLEDEndIndex(15));
+                m_slot2 = pattern;
+            }
+            if (m_slot3 != pattern) {
+                m_candle.setControl(new EmptyAnimation(3));
+                m_candle.setControl(pattern.withLEDStartIndex(16).withLEDEndIndex(20));
+                m_slot3 = pattern;
+            }
+        }
+    }
+
+    /**
+     * Sets the LED pattern based on a start index, end index, and a control request.
+     * Control requests are public and can be accessed in the LEDSubsystem.
+     *
+     * @param startIndex LED to start at.
+     * @param endIndex LED to end at.
+     * @param slot The animation slot to use.
+     * @param pattern Control Request to use.
+     */
+    public void set(int slot, StrobeAnimation pattern) {
+        if (slot == 0) {
+            if (m_slot0 != pattern) {
+                m_candle.setControl(new EmptyAnimation(0));
+                m_candle.setControl(pattern.withLEDStartIndex(0).withLEDEndIndex(7).withSlot(0));
+                m_slot0 = pattern;
+            }
+        } else if (slot == 1) {
+            if (m_slot1 != pattern) {
+                m_candle.setControl(new EmptyAnimation(1));
+                m_candle.setControl(pattern.withLEDStartIndex(8).withLEDEndIndex(12).withSlot(1));
+                m_slot1 = pattern;
+            }
+        } else if (slot == 2) {
+            if (m_slot2 != pattern) {
+                m_candle.setControl(new EmptyAnimation(2));
+                m_candle.setControl(pattern.withLEDStartIndex(13).withLEDEndIndex(15).withSlot(2));
+                m_slot2 = pattern;
+            }
+        } else if (slot == 3) {
+            if (m_slot3 != pattern) {
+                m_candle.setControl(new EmptyAnimation(3));
+                m_candle.setControl(pattern.withLEDStartIndex(16).withLEDEndIndex(20).withSlot(3));
+                m_slot3 = pattern;
+            }
+        } else {
+            if (m_slot0 != pattern) {
+                m_candle.setControl(new EmptyAnimation(0));
+                m_candle.setControl(pattern.withLEDStartIndex(0).withLEDEndIndex(7).withSlot(0));
+                m_slot0 = pattern;
+            }
+            if (m_slot1 != pattern) {
+                m_candle.setControl(new EmptyAnimation(1));
+                m_candle.setControl(pattern.withLEDStartIndex(8).withLEDEndIndex(12).withSlot(1));
+                m_slot1 = pattern;
+            }
+            if (m_slot2 != pattern) {
+                m_candle.setControl(new EmptyAnimation(2));
+                m_candle.setControl(pattern.withLEDStartIndex(13).withLEDEndIndex(15).withSlot(2));
+                m_slot2 = pattern;
+            }
+            if (m_slot3 != pattern) {
+                m_candle.setControl(new EmptyAnimation(3));
+                m_candle.setControl(pattern.withLEDStartIndex(16).withLEDEndIndex(20).withSlot(3));
+                m_slot3 = pattern;
+            }
+        }
+    }
+
+    /**
+     * Sets the LED pattern based on a start index, end index, and a control request.
+     * Control requests are public and can be accessed in the LEDSubsystem.
+     *
+     * @param startIndex LED to start at.
+     * @param endIndex LED to end at.
+     * @param slot The animation slot to use.
+     * @param pattern Control Request to use.
+     */
+    public void set(int slot, SingleFadeAnimation pattern) {
+        if (slot == 0) {
+            if (m_slot0 != pattern) {
+                m_candle.setControl(new EmptyAnimation(0));
+                m_candle.setControl(pattern.withLEDStartIndex(0).withLEDEndIndex(7).withSlot(0));
+                m_slot0 = pattern;
+            }
+        } else if (slot == 1) {
+            if (m_slot1 != pattern) {
+                m_candle.setControl(new EmptyAnimation(1));
+                m_candle.setControl(pattern.withLEDStartIndex(8).withLEDEndIndex(12).withSlot(1));
+                m_slot1 = pattern;
+            }
+        } else if (slot == 2) {
+            if (m_slot2 != pattern) {
+                m_candle.setControl(new EmptyAnimation(2));
+                m_candle.setControl(pattern.withLEDStartIndex(13).withLEDEndIndex(15).withSlot(2));
+                m_slot2 = pattern;
+            }
+        } else if (slot == 3) {
+            if (m_slot3 != pattern) {
+                m_candle.setControl(new EmptyAnimation(3));
+                m_candle.setControl(pattern.withLEDStartIndex(16).withLEDEndIndex(20).withSlot(3));
+                m_slot3 = pattern;
+            }
+        } else {
+            if (m_slot0 != pattern) {
+                m_candle.setControl(new EmptyAnimation(0));
+                m_candle.setControl(pattern.withLEDStartIndex(0).withLEDEndIndex(7).withSlot(0));
+                m_slot0 = pattern;
+            }
+            if (m_slot1 != pattern) {
+                m_candle.setControl(new EmptyAnimation(1));
+                m_candle.setControl(pattern.withLEDStartIndex(8).withLEDEndIndex(12).withSlot(1));
+                m_slot1 = pattern;
+            }
+            if (m_slot2 != pattern) {
+                m_candle.setControl(new EmptyAnimation(2));
+                m_candle.setControl(pattern.withLEDStartIndex(13).withLEDEndIndex(15).withSlot(2));
+                m_slot2 = pattern;
+            }
+            if (m_slot3 != pattern) {
+                m_candle.setControl(new EmptyAnimation(3));
+                m_candle.setControl(pattern.withLEDStartIndex(16).withLEDEndIndex(20).withSlot(3));
+                m_slot3 = pattern;
+            }
+        }
+    }
+
+    /**
+     * Sets the LED pattern based on a start index, end index, and a control request.
+     * Control requests are public and can be accessed in the LEDSubsystem.
+     *
+     * @param startIndex LED to start at.
+     * @param endIndex LED to end at.
+     * @param slot The animation slot to use.
+     * @param pattern Control Request to use.
+     */
+    public void set(int slot, TwinkleAnimation pattern) {
+        if (slot == 0) {
+            if (m_slot0 != pattern) {
+                m_candle.setControl(new EmptyAnimation(0));
+                m_candle.setControl(pattern.withLEDStartIndex(0).withLEDEndIndex(7).withSlot(0));
+                m_slot0 = pattern;
+            }
+        } else if (slot == 1) {
+            if (m_slot1 != pattern) {
+                m_candle.setControl(new EmptyAnimation(1));
+                m_candle.setControl(pattern.withLEDStartIndex(8).withLEDEndIndex(12).withSlot(1));
+                m_slot1 = pattern;
+            }
+        } else if (slot == 2) {
+            if (m_slot2 != pattern) {
+                m_candle.setControl(new EmptyAnimation(2));
+                m_candle.setControl(pattern.withLEDStartIndex(13).withLEDEndIndex(15).withSlot(2));
+                m_slot2 = pattern;
+            }
+        } else if (slot == 3) {
+            if (m_slot3 != pattern) {
+                m_candle.setControl(new EmptyAnimation(3));
+                m_candle.setControl(pattern.withLEDStartIndex(16).withLEDEndIndex(20).withSlot(3));
+                m_slot3 = pattern;
+            }
+        } else {
+            if (m_slot0 != pattern) {
+                m_candle.setControl(new EmptyAnimation(0));
+                m_candle.setControl(pattern.withLEDStartIndex(0).withLEDEndIndex(7).withSlot(0));
+                m_slot0 = pattern;
+            }
+            if (m_slot1 != pattern) {
+                m_candle.setControl(new EmptyAnimation(1));
+                m_candle.setControl(pattern.withLEDStartIndex(8).withLEDEndIndex(12).withSlot(1));
+                m_slot1 = pattern;
+            }
+            if (m_slot2 != pattern) {
+                m_candle.setControl(new EmptyAnimation(2));
+                m_candle.setControl(pattern.withLEDStartIndex(13).withLEDEndIndex(15).withSlot(2));
+                m_slot2 = pattern;
+            }
+            if (m_slot3 != pattern) {
+                m_candle.setControl(new EmptyAnimation(3));
+                m_candle.setControl(pattern.withLEDStartIndex(16).withLEDEndIndex(20).withSlot(3));
+                m_slot3 = pattern;
+            }
+        }
+    }
+
+    public void clearAnimation(int slot) {
         m_candle.setControl(new EmptyAnimation(slot));
-        m_candle.setControl(pattern.withLEDStartIndex(startIndex).withLEDEndIndex(endIndex));
-    }
-
-    /**
-     * Sets the LED pattern based on a start index, end index, and a control request.
-     * Control requests are public and can be accessed in the LEDSubsystem.
-     *
-     * @param startIndex LED to start at.
-     * @param endIndex LED to end at.
-     * @param slot The animation slot to use.
-     * @param pattern Control Request to use.
-     */
-    public void set(int startIndex, int endIndex, int slot, StrobeAnimation pattern) {
-        m_candle.setControl(pattern.withLEDStartIndex(startIndex).withLEDEndIndex(endIndex).withSlot(slot));
-    }
-
-    /**
-     * Sets the LED pattern based on a start index, end index, and a control request.
-     * Control requests are public and can be accessed in the LEDSubsystem.
-     *
-     * @param startIndex LED to start at.
-     * @param endIndex LED to end at.
-     * @param slot The animation slot to use.
-     * @param pattern Control Request to use.
-     */
-    public void set(int startIndex, int endIndex, int slot, SingleFadeAnimation pattern) {
-        m_candle.setControl(pattern.withLEDStartIndex(startIndex).withLEDEndIndex(endIndex).withSlot(slot));
-    }
-
-    /**
-     * Sets the LED pattern based on a start index, end index, and a control request.
-     * Control requests are public and can be accessed in the LEDSubsystem.
-     *
-     * @param startIndex LED to start at.
-     * @param endIndex LED to end at.
-     * @param slot The animation slot to use.
-     * @param pattern Control Request to use.
-     */
-    public void set(int startIndex, int endIndex, int slot, TwinkleAnimation pattern) {
-        m_candle.setControl(pattern.withLEDStartIndex(startIndex).withLEDEndIndex(endIndex).withSlot(slot));
     }
 }

@@ -117,6 +117,8 @@ public class RobotContainer {
             new HubShot(m_leftFlywheel, m_leftHood, m_leftTurret, m_indexer, m_leftChamber, m_rightFlywheel, m_rightHood, m_rightTurret, m_rightChamber));
         NamedCommands.registerCommand("General Shot", 
             new GeneralShot(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel));
+        NamedCommands.registerCommand("Pass", 
+            new GeneralPass(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel));
         NamedCommands.registerCommand("Stop Shooting",
             new ParallelDeadlineGroup(
                 new LeftZeroHoodSequence(m_leftHood),
@@ -236,8 +238,8 @@ public class RobotContainer {
                 .alongWith(new RightSetChamberOpenLoop(() -> 0, m_rightChamber)));
 
         joystick.y().onTrue(
-            new InstantCommand(() -> MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 0.6)
-            .alongWith(new InstantCommand(() -> MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond) * 0.6))
+            new InstantCommand(() -> MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 1.0)
+            .alongWith(new InstantCommand(() -> MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond) * 1.0))
             .alongWith(new ConditionalCommand(
                 new GeneralPass(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
                 new GeneralShot(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
@@ -316,25 +318,29 @@ public class RobotContainer {
             new InstantCommand(() -> m_leftChamber.disable(false))
             .alongWith(new InstantCommand(() -> m_leftTurret.disable(false)))
             .alongWith(new InstantCommand(() -> m_leftHood.disable(false)))
-            .alongWith(new InstantCommand(() -> m_leftFlywheel.disable(false))));
+            .alongWith(new InstantCommand(() -> m_leftFlywheel.disable(false)))
+            .alongWith(new InstantCommand(() -> m_ledSubsystem.clearAnimation(1))));
 
         operator3Way1Down.onTrue(
             new InstantCommand(() -> m_leftChamber.disable(true))
             .alongWith(new InstantCommand(() -> m_leftTurret.disable(true)))
             .alongWith(new InstantCommand(() -> m_leftHood.disable(true)))
-            .alongWith(new InstantCommand(() -> m_leftFlywheel.disable(true))));
+            .alongWith(new InstantCommand(() -> m_leftFlywheel.disable(true)))
+            .alongWith(new InstantCommand(() -> m_ledSubsystem.set(1, LEDSubsystem.kStrobeFastPurple))));
 
         operator3Way2Up.onTrue(
             new InstantCommand(() -> m_rightChamber.disable(false))
             .alongWith(new InstantCommand(() -> m_rightTurret.disable(false)))
             .alongWith(new InstantCommand(() -> m_rightHood.disable(false)))
-            .alongWith(new InstantCommand(() -> m_rightFlywheel.disable(false))));
+            .alongWith(new InstantCommand(() -> m_rightFlywheel.disable(false)))
+            .alongWith(new InstantCommand(() -> m_ledSubsystem.clearAnimation(1))));
 
         operator3Way2Down.onTrue(
             new InstantCommand(() -> m_rightChamber.disable(true))
             .alongWith(new InstantCommand(() -> m_rightTurret.disable(true)))
             .alongWith(new InstantCommand(() -> m_rightHood.disable(true)))
-            .alongWith(new InstantCommand(() -> m_rightFlywheel.disable(true))));
+            .alongWith(new InstantCommand(() -> m_rightFlywheel.disable(true)))
+            .alongWith(new InstantCommand(() -> m_ledSubsystem.set(3, LEDSubsystem.kStrobeFastPurple))));
 
         operator3Way3Up.onTrue(
             new InstantCommand(() -> m_rightChamber.reverseWhenDisabled(true))

@@ -81,7 +81,7 @@ public class Calibrations {
         public static final int kCurrentLimitSamplings = 10;
 
         /** Threshold for the mean current draw of the intake motors, over the last n samples. */
-        public static final double kMeanCurrentLimit = 30;
+        public static final double kMeanCurrentLimit = 40;
     }
 
     /** Calibrations for the spindexer. */
@@ -704,7 +704,7 @@ public class Calibrations {
          * Multiplier for distance, to use in velocity offset. Increasing this value will make it
          * counter velocity more at long range.
          */
-        public static final double kVelocityDistanceMult = 1.6; // 1.1
+        public static final double kVelocityDistanceMult = 2.0; // 1.6
         
         /** 
          * Constant to add to the distance, after multiplier, to use in the velocity offset.

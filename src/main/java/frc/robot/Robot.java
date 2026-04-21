@@ -159,9 +159,21 @@ public class Robot extends TimedRobot {
             }
 
             if (m_hasTags) {
-                m_robotContainer.m_ledSubsystem.set(8, 20, 0, LEDSubsystem.kTwinkleGreen);
+                if (!m_robotContainer.m_leftTurret.isDisabled()) {
+                    m_robotContainer.m_ledSubsystem.set(1, LEDSubsystem.kStrobeGreen);
+                }
+                if (!m_robotContainer.m_rightTurret.isDisabled()) {
+                    m_robotContainer.m_ledSubsystem.set(3, LEDSubsystem.kStrobeGreen);
+                }
+                m_robotContainer.m_ledSubsystem.set(2, LEDSubsystem.kStrobeGreen);
             } else {
-                m_robotContainer.m_ledSubsystem.set(8, 20, 0, LEDSubsystem.kSolidWhite);
+                if (!m_robotContainer.m_leftTurret.isDisabled()) {
+                    m_robotContainer.m_ledSubsystem.set(1, LEDSubsystem.kSolidWhite);
+                }
+                if (!m_robotContainer.m_rightTurret.isDisabled()) {
+                    m_robotContainer.m_ledSubsystem.set(3, LEDSubsystem.kSolidWhite);
+                }
+                m_robotContainer.m_ledSubsystem.set(2, LEDSubsystem.kSolidWhite);
             }
             
 
@@ -220,18 +232,18 @@ public class Robot extends TimedRobot {
             m_alliance = DriverStation.getAlliance().get();
             if (m_alliance != null) {
                 if (m_robotContainer.getAutonomousCommand() == null) {
-                    m_robotContainer.m_ledSubsystem.set(0, 20, 0, LEDSubsystem.kStrobeFastPurple);
+                    m_robotContainer.m_ledSubsystem.set(4, LEDSubsystem.kStrobeFastPurple);
                 } else {
                     if (m_alliance == Alliance.Red) {
-                        m_robotContainer.m_ledSubsystem.set(0, 20, 0, LEDSubsystem.kFadeRed);
+                        m_robotContainer.m_ledSubsystem.set(4, LEDSubsystem.kFadeRed);
                     } else {
-                        m_robotContainer.m_ledSubsystem.set(0, 20, 0, LEDSubsystem.kFadeBlue);
+                        m_robotContainer.m_ledSubsystem.set(4, LEDSubsystem.kFadeBlue);
                     }
                 }
             }
             
         } else {
-            m_robotContainer.m_ledSubsystem.set(0, 20, 0, LEDSubsystem.kFadePurple);
+            m_robotContainer.m_ledSubsystem.set(4, LEDSubsystem.kFadePurple);
         }
     }
 

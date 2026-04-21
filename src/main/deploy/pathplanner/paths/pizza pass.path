@@ -3,33 +3,92 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.4826961483594863,
-        "y": 4.015592011412268
+        "x": 3.5732667617654785,
+        "y": 5.050684736083285
       },
       "prevControl": null,
       "nextControl": {
-        "x": -1.1469329529243941,
-        "y": 5.64586305278174
+        "x": 5.242353780310414,
+        "y": 5.671740370890704
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.567589158350522,
-        "y": 7.263195435088309
+        "x": 6.859686162621399,
+        "y": 4.559015691860746
       },
       "prevControl": {
-        "x": 8.748730385164052,
-        "y": 4.895420827389444
+        "x": 5.850470756059344,
+        "y": 5.0377460770247975
+      },
+      "nextControl": {
+        "x": 7.868901569183454,
+        "y": 4.080285306696695
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.541711840222927,
+        "y": 5.930513552074879
+      },
+      "prevControl": {
+        "x": 8.54870170319876,
+        "y": 5.126679309853909
+      },
+      "nextControl": {
+        "x": 8.52877318116444,
+        "y": 7.4184593438009845
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.238630527817403,
+        "y": 7.625477888730385
+      },
+      "prevControl": {
+        "x": 7.59718972895863,
+        "y": 7.625477888730385
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Blue Depot Pass Return"
     }
   ],
-  "rotationTargets": [],
-  "constraintZones": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7292110874200386,
+      "rotationDegrees": -25.911810308609386
+    },
+    {
+      "waypointRelativePos": 2.0085287846481834,
+      "rotationDegrees": 92.14372411445262
+    },
+    {
+      "waypointRelativePos": 2.5074626865671514,
+      "rotationDegrees": 179.59723819156324
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.7211343686698266,
+      "maxWaypointRelativePos": 2.26063470627954,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 3.5,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -41,8 +100,8 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -90.0
+    "velocity": 3.5,
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": null,
