@@ -3,55 +3,64 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.0,
-        "y": 8.09
+        "x": 3.5862054208273886,
+        "y": 5.011868758915835
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.027661063685749e-16,
-        "y": 3.145454248859794
+        "x": 4.983580599144079,
+        "y": 6.150470756062767
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.52151212553495,
-        "y": 6.034022824536376
+        "x": 7.739514978601996,
+        "y": 4.093223965763196
       },
       "prevControl": {
-        "x": 2.9795765122649245,
-        "y": 7.659829664346453
+        "x": 7.739514978601996,
+        "y": 5.366548425347199
       },
       "nextControl": {
-        "x": 4.478972895863052,
-        "y": 3.161640513552068
+        "x": 7.739514978601996,
+        "y": 1.9842225392296724
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 16.565,
-        "y": 0.0
+        "x": 2.2535235378031384,
+        "y": 3.8085734664764628
       },
       "prevControl": {
-        "x": 14.986485930408373,
-        "y": 4.72261133699498
+        "x": 2.809885877318117,
+        "y": 2.152425106990014
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Blue Midfield"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5241635687732342,
+      "rotationDegrees": -15.324362881557777
+    },
+    {
+      "waypointRelativePos": 1.5043370508054466,
+      "rotationDegrees": 178.10544516053065
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.5633100697906226,
-      "maxWaypointRelativePos": 1.476570289132591,
+      "minWaypointRelativePos": 1.422507403751225,
+      "maxWaypointRelativePos": 1.7384007897334677,
       "constraints": {
-        "maxVelocity": 1.0,
+        "maxVelocity": 2.0,
         "maxAcceleration": 3.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -63,8 +72,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -72,13 +81,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 91.12330271407545
   },
   "reversed": false,
-  "folder": "TEST PATHS",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

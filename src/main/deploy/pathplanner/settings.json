@@ -4,10 +4,12 @@
   "holonomicMode": true,
   "pathFolders": [
     "BLUE PATHS",
+    "TEST PATHS",
     "RED PATHS"
   ],
   "autoFolders": [
     "BLUE AUTOS",
+    "TEST AUTOS",
     "RED AUTOS"
   ],
   "defaultMaxVel": 3.0,

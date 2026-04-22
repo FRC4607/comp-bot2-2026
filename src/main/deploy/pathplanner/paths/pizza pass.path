@@ -71,7 +71,7 @@
     },
     {
       "waypointRelativePos": 2.5074626865671514,
-      "rotationDegrees": 179.59723819156324
+      "rotationDegrees": 179.59723819156326
     }
   ],
   "constraintZones": [
@@ -100,11 +100,11 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.5,
+    "velocity": 0.5,
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "TEST PATHS",
   "idealStartingState": {
     "velocity": 0.0,
     "rotation": 0.0
