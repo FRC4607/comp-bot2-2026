@@ -81,7 +81,7 @@ public class Calibrations {
         public static final int kCurrentLimitSamplings = 10;
 
         /** Threshold for the mean current draw of the intake motors, over the last n samples. */
-        public static final double kMeanCurrentLimit = 40;
+        public static final double kMeanCurrentLimit = 30;
     }
 
     /** Calibrations for the spindexer. */
