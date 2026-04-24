@@ -47,12 +47,16 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -211,14 +215,14 @@ public class RobotContainer {
         //     .alongWith(new SetIntakeWheelsOpenLoop(() -> 0.0, m_intakeWheels)));
 
         joystick.rightBumper().and(operatorBlueL)
-            .onTrue(new MoveIntakeToPosition(70, 20, m_intakeArm)
+            .onTrue(new MoveIntakeToPosition(130, 20, m_intakeArm)
                 .alongWith(new SetIntakeWheelsVelocity(90, 80, m_intakeWheels))
                 /* .alongWith(new SetIndexerVelocity(90.0, 0, m_indexer)) */)
             .onFalse(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)
                 /*.alongWith(new SetIndexerVelocity(0, 0, m_indexer)) */);
 
         joystick.rightBumper().and(operatorBlueL.negate())
-            .onTrue(new MoveIntakeToPosition(70, 20, m_intakeArm)
+            .onTrue(new MoveIntakeToPosition(130, 20, m_intakeArm)
                 .alongWith(new SetIntakeWheelsVelocity(90, 80, m_intakeWheels))
                 /* .alongWith(new SetIndexerVelocity(0, 0, m_indexer)) */)
             .onFalse(new MoveIntakeToPosition(0, 20, m_intakeArm)
@@ -421,4 +425,13 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return  autoChooser.getSelected();
     }
+
+    public Command RumblePulseFast = new RepeatCommand(new ParallelDeadlineGroup(
+                                                new WaitCommand(0.1),
+                                                new InstantCommand(
+                                                        () -> joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new ParallelDeadlineGroup(
+                                                        new WaitCommand(0.1),
+                                                        new InstantCommand(() -> joystick
+                                                                .setRumble(RumbleType.kBothRumble, 0)))));
 }

@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Calibrations.ShootingCalibrations;
 import frc.robot.Constants.FieldConstants;
@@ -52,6 +53,8 @@ public class Robot extends TimedRobot {
     public final RobotContainer m_robotContainer;
     private int m_loopCounter;
     private double m_countDown;
+    private boolean m_isHubActive;
+
     public Translation2d m_targetHubPose;
     public double m_shotOffset;
 
@@ -203,48 +206,128 @@ public class Robot extends TimedRobot {
 
                 SmartDashboard.putBoolean("Has Tags?", m_hasTags);
 
-                SmartDashboard.putBoolean("Hub State", isHubActive());
+                m_isHubActive = isHubActive();
+
+                SmartDashboard.putBoolean("Hub State", m_isHubActive);
                 SmartDashboard.putNumber("Time Until Switch", m_countDown);
 
                 if (!DriverStation.getGameSpecificMessage().isBlank()) {
-                    if (m_countDown < 2) {
-                        if (m_rumbleStage < 3) {
-                            m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1);
+                    if (!m_isHubActive) {
+                        if (m_countDown < 1) {
+                            if (m_rumbleStage < 6) {
+                                CommandScheduler.getInstance().schedule(
+                                        new ParallelDeadlineGroup(
+                                                new WaitCommand(0.5),
+                                                new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
+                            }
+                            m_rumbleStage = 6;
+                        } else if (m_countDown < 2) {
+                            if (m_rumbleStage < 5) {
+                                CommandScheduler.getInstance().schedule(
+                                        new ParallelDeadlineGroup(
+                                                new WaitCommand(0.5),
+                                                new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
+                            }
+                            m_rumbleStage = 5;
+                        } else if (m_countDown < 3) {
+                            if (m_rumbleStage < 4) {
+                                CommandScheduler.getInstance().schedule(
+                                        new ParallelDeadlineGroup(
+                                                new WaitCommand(0.5),
+                                                new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
+                            }
+                            m_rumbleStage = 4;
+                        } else if (m_countDown < 4) {
+                            if (m_rumbleStage < 3) {
+                                CommandScheduler.getInstance().schedule(
+                                        new ParallelDeadlineGroup(
+                                                new WaitCommand(0.5),
+                                                new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
+                            }
+                            m_rumbleStage = 3;
+                        } else if (m_countDown < 5) {
+                            if (m_rumbleStage < 2) {
+                                CommandScheduler.getInstance().schedule(
+                                        new ParallelDeadlineGroup(
+                                                new WaitCommand(0.5),
+                                                new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
+                            }
+                            m_rumbleStage = 2;
+                        } else if (m_countDown < 10) {
+                            if (m_rumbleStage < 1) {
+                                CommandScheduler.getInstance().schedule(
+                                        new ParallelDeadlineGroup(
+                                                new WaitCommand(0.25),
+                                                new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new ParallelDeadlineGroup(
+                                                        new WaitCommand(0.25),
+                                                        new InstantCommand(() -> m_robotContainer.joystick
+                                                                .setRumble(RumbleType.kBothRumble, 0))))
+                                                .andThen(new ParallelDeadlineGroup(
+                                                        new WaitCommand(0.25),
+                                                        new InstantCommand(() -> m_robotContainer.joystick
+                                                                .setRumble(RumbleType.kBothRumble, 1))))
+                                                .andThen(new ParallelDeadlineGroup(
+                                                        new WaitCommand(0.25),
+                                                        new InstantCommand(() -> m_robotContainer.joystick
+                                                                .setRumble(RumbleType.kBothRumble, 0))))
+                                                .andThen(new ParallelDeadlineGroup(
+                                                        new WaitCommand(0.25),
+                                                        new InstantCommand(() -> m_robotContainer.joystick
+                                                                .setRumble(RumbleType.kBothRumble, 1))))
+                                                .andThen(new InstantCommand(() -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
+                            }
+                            m_rumbleStage = 1;
+                        } else {
+                            CommandScheduler.getInstance().cancel(m_robotContainer.RumblePulseFast);
+                            m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0);
+                            m_rumbleStage = 0;
                         }
-                        m_rumbleStage = 3;
-                    } else if (m_countDown < 5) {
-                        if (m_rumbleStage < 2) {
-                            CommandScheduler.getInstance().schedule(
-                                    new ParallelDeadlineGroup(
-                                            new WaitCommand(0.25),
-                                            new InstantCommand(
-                                                    () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
-                                            .andThen(new ParallelDeadlineGroup(
-                                                    new WaitCommand(0.25),
-                                                    new InstantCommand(() -> m_robotContainer.joystick
-                                                            .setRumble(RumbleType.kBothRumble, 0))))
-                                            .andThen(new ParallelDeadlineGroup(
-                                                    new WaitCommand(0.25),
-                                                    new InstantCommand(() -> m_robotContainer.joystick
-                                                            .setRumble(RumbleType.kBothRumble, 1))))
-                                            .andThen(new InstantCommand(
-                                                    () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
-                        }
-                        m_rumbleStage = 2;
-                    } else if (m_countDown < 10) {
-                        if (m_rumbleStage < 1) {
-                            CommandScheduler.getInstance().schedule(
-                                    new ParallelDeadlineGroup(
-                                            new WaitCommand(0.5),
-                                            new InstantCommand(
-                                                    () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
-                                            .andThen(new InstantCommand(
-                                                    () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
-                        }
-                        m_rumbleStage = 1;
                     } else {
-                        m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0);
-                        m_rumbleStage = 0;
+                        if (m_countDown < 5) {
+                            if (m_rumbleStage < 2) {
+                                CommandScheduler.getInstance().schedule(m_robotContainer.RumblePulseFast);
+                            }
+                            m_rumbleStage = 2;
+                        } else if (m_countDown < 10) {
+                            if (m_rumbleStage < 1) {
+                                CommandScheduler.getInstance().schedule(
+                                        new ParallelDeadlineGroup(
+                                                new WaitCommand(0.25),
+                                                new InstantCommand(
+                                                        () -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new ParallelDeadlineGroup(
+                                                        new WaitCommand(0.25),
+                                                        new InstantCommand(() -> m_robotContainer.joystick
+                                                                .setRumble(RumbleType.kBothRumble, 0))))
+                                                .andThen(new ParallelDeadlineGroup(
+                                                        new WaitCommand(0.25),
+                                                        new InstantCommand(() -> m_robotContainer.joystick
+                                                                .setRumble(RumbleType.kBothRumble, 1))))
+                                                .andThen(new InstantCommand(() -> m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0))));
+                            }
+                            m_rumbleStage = 1;
+                        } else {
+                            CommandScheduler.getInstance().cancel(m_robotContainer.RumblePulseFast);
+                            m_robotContainer.joystick.setRumble(RumbleType.kBothRumble, 0);
+                            m_rumbleStage = 0;
+                        }
                     }
                 }
             }
@@ -432,7 +515,7 @@ public class Robot extends TimedRobot {
             return true;
         } else if (m_matchTime > 105) {
 
-            if (m_redActiveFirst && (alliance.get() == Alliance.Red)) {
+            if ((m_redActiveFirst && (alliance.get() == Alliance.Red)) || (!m_redActiveFirst && (alliance.get() == Alliance.Blue))) {
                 m_countDown = m_matchTime - 105;
                 return true;
             } else {
@@ -442,7 +525,7 @@ public class Robot extends TimedRobot {
 
         } else if (m_matchTime > 80) {
 
-            if (m_redActiveFirst && (alliance.get() == Alliance.Red)) {
+            if ((m_redActiveFirst && (alliance.get() == Alliance.Red)) || (!m_redActiveFirst && (alliance.get() == Alliance.Blue))) {
                 m_countDown = m_matchTime - 80;
                 return false;
             } else {
@@ -452,7 +535,7 @@ public class Robot extends TimedRobot {
 
         } else if (m_matchTime > 55) {
 
-            if (m_redActiveFirst && (alliance.get() == Alliance.Red)) {
+            if ((m_redActiveFirst && (alliance.get() == Alliance.Red)) || (!m_redActiveFirst && (alliance.get() == Alliance.Blue))) {
                 m_countDown = m_matchTime - 55;
                 return true;
             } else {
@@ -462,7 +545,7 @@ public class Robot extends TimedRobot {
 
         } else if (m_matchTime > 30) {
 
-            if (m_redActiveFirst && (alliance.get() == Alliance.Red)) {
+            if ((m_redActiveFirst && (alliance.get() == Alliance.Red)) || (!m_redActiveFirst && (alliance.get() == Alliance.Blue))) {
                 m_countDown = m_matchTime - 30;
                 return false;
             } else {
