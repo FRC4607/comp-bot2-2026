@@ -137,7 +137,7 @@ public class RobotContainer {
             .alongWith(new SetIntakeWheelsVelocity(5, 10, m_intakeWheels)));
         NamedCommands.registerCommand("Intake", 
             new MoveIntakeToPosition(130, 10, m_intakeArm).withTimeout(2)
-            .andThen(new SetIntakeWheelsVelocity(90, 1, m_intakeWheels).withTimeout(1)));
+            .andThen(new SetIntakeWheelsVelocity(90, 1, m_intakeWheels)));
         NamedCommands.registerCommand("Stop Intaking",
             new SetIntakeWheelsVelocity(5, 10, m_intakeWheels));
         NamedCommands.registerCommand("Raise Intake Arm",
