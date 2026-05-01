@@ -232,7 +232,7 @@ public class PointToPass extends Command {
         // Include the operater-entered value in the signal logger for checking later
         SignalLogger.writeDouble("Shooting/RightFlywheelMult", SmartDashboard.getNumber(ShootingCalibrations.kRightFlywheelDistanceMultPrefKey, ShootingCalibrations.kRightFlywheelDistanceMult));
 
-        SmartDashboard.putNumber("right distance", m_rightDistance);
+        // SmartDashboard.putNumber("right distance", m_rightDistance);
 
         // SmartDashboard.putNumber("Right Turret Distance To Hub", m_rightDistance);
     }

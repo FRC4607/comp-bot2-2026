@@ -204,7 +204,7 @@ public class PointAtHub extends Command {
         // Include the operater-entered value in the signal logger for checking later
         SignalLogger.writeDouble("Shooting/RightFlywheelMult", SmartDashboard.getNumber(ShootingCalibrations.kRightFlywheelDistanceMultPrefKey, ShootingCalibrations.kRightFlywheelDistanceMult));
 
-        SmartDashboard.putNumber("Right Turret Distance To Hub", m_rightDistance);
+        // SmartDashboard.putNumber("Right Turret Distance To Hub", m_rightDistance);
     }
 
     // Called once the command ends or is interrupted.
