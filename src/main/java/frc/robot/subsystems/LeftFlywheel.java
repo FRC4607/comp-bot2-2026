@@ -49,8 +49,10 @@ public class LeftFlywheel extends SubsystemBase {
 
         m_talonFXConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
 
-        // Current limit
+        // Current limits
         m_talonFXConfig.CurrentLimits.StatorCurrentLimit = LeftFlywheelCalibrations.kMaxAmperage;
+        m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = LeftFlywheelCalibrations.kMaxSupplyAmperage;
+
 
         m_motor1.getConfigurator().apply(m_talonFXConfig);
         m_motor2.getConfigurator().apply(m_talonFXConfig);

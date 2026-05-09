@@ -77,6 +77,9 @@ public class Calibrations {
         /** Maximum amperage of the motor. */
         public static final double kMaxAmperage = 80;
 
+        /** Maximum supply current limit of the motor. */
+        public static final double kMaxSupplyAmperage = 40;
+
         /** When using the SetIntakeWheelsVelocity method, take the last n readings of StatorCurrent from the motor. */
         public static final int kCurrentLimitSamplings = 10;
 
@@ -107,6 +110,8 @@ public class Calibrations {
 
         /** Amperage limit of the motors. */
         public static final double kMaxAmperage = 80;
+
+        public static final double kMaxSupplyAmperage = 15;
         
     }
 
@@ -133,6 +138,9 @@ public class Calibrations {
 
         /** Amperage limit of the motors. */
         public static final double kMaxAmperage = 80;
+
+        /** Supply current limit of the motors. */
+        public static final double kMaxSupplyAmperage = 30;
         
     }
 
@@ -238,8 +246,11 @@ public class Calibrations {
         /** Max acceleration of the mechanism. */
         public static final double kMaxAcceleration = 0;
 
-        /** Current limit of each motor. */
+        /** Stator current limit of each motor. */
         public static final double kMaxAmperage = 80;
+
+        /** Supply current limit of each motor. */
+        public static final double kMaxSupplyAmperage = 30;
     }
 
     /** Calibrations for the right chamber. */
@@ -266,6 +277,8 @@ public class Calibrations {
         /** Amperage limit of the motors. */
         public static final double kMaxAmperage = 80;
 
+        /** Supply current limit of the motors. */
+        public static final double kMaxSupplyAmperage = 30;
     }
 
     /** Calibrations for the right turret. */
@@ -373,6 +386,9 @@ public class Calibrations {
 
         /** Current limit of each motor. */
         public static final double kMaxAmperage = 80;
+
+        /** Supply current limit of each motor. */
+        public static final double kMaxSupplyAmperage = 30;
     }
 
 

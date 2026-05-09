@@ -50,6 +50,7 @@ public class RightChamber extends SubsystemBase {
 
         // Current limit
         m_talonFXConfig.CurrentLimits.StatorCurrentLimit = RightChamberCalibrations.kMaxAmperage;
+        m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = RightChamberCalibrations.kMaxSupplyAmperage;
 
         m_motor1.getConfigurator().apply(m_talonFXConfig);
     }

@@ -8,27 +8,32 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.309001426533523,
-        "y": 4.843666191155493
+        "x": 1.6324679029957196,
+        "y": 4.74015691868759
       },
       "isLocked": false,
       "linkedName": "Depot P.1 End"
     },
     {
       "anchor": {
-        "x": 2.2535235378031384,
+        "x": 1.8783024251069897,
         "y": 3.925021398002854
       },
       "prevControl": {
-        "x": 2.0982596291012836,
-        "y": 5.64586305278174
+        "x": 2.318216833095578,
+        "y": 5.516476462196862
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 120.60956673882337
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +47,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 88.53119928561418
+    "rotation": 91.23197740263973
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -91.27452842065125
   },
   "useDefaultConstraints": true
 }

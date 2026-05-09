@@ -51,6 +51,7 @@ public class LeftChamber extends SubsystemBase {
 
         // Current limit
         m_talonFXConfig.CurrentLimits.StatorCurrentLimit = LeftChamberCalibrations.kMaxAmperage;
+        m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = LeftChamberCalibrations.kMaxSupplyAmperage;
 
         m_motor1.getConfigurator().apply(m_talonFXConfig);
     }

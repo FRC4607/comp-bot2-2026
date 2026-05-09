@@ -214,14 +214,14 @@ public class RobotContainer {
         // joystick.back().onTrue(new MoveIntakeToPosition(0, 10, m_intakeArm)
         //     .alongWith(new SetIntakeWheelsOpenLoop(() -> 0.0, m_intakeWheels)));
 
-        joystick.rightBumper().and(operatorBlueL)
-            .onTrue(new MoveIntakeToPosition(130, 20, m_intakeArm)
-                .alongWith(new SetIntakeWheelsVelocity(90, 80, m_intakeWheels))
-                /* .alongWith(new SetIndexerVelocity(90.0, 0, m_indexer)) */)
-            .onFalse(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)
-                /*.alongWith(new SetIndexerVelocity(0, 0, m_indexer)) */);
+        // joystick.rightBumper().and(operatorBlueL)
+        //     .onTrue(new MoveIntakeToPosition(130, 20, m_intakeArm)
+        //         .alongWith(new SetIntakeWheelsVelocity(90, 80, m_intakeWheels))
+        //         /* .alongWith(new SetIndexerVelocity(90.0, 0, m_indexer)) */)
+        //     .onFalse(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)
+        //         /*.alongWith(new SetIndexerVelocity(0, 0, m_indexer)) */);
 
-        joystick.rightBumper().and(operatorBlueL.negate())
+        joystick.rightBumper()
             .onTrue(new MoveIntakeToPosition(130, 20, m_intakeArm)
                 .alongWith(new SetIntakeWheelsVelocity(90, 80, m_intakeWheels))
                 /* .alongWith(new SetIndexerVelocity(0, 0, m_indexer)) */)
@@ -229,8 +229,8 @@ public class RobotContainer {
                 .alongWith(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels))
                 /* .alongWith(new SetIndexerVelocity(90.0, 0, m_indexer)) */);
 
-        operatorBlueL.onFalse(new MoveIntakeToPosition(0, 10, m_intakeArm)
-            .alongWith(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)));
+        // operatorBlueL.onFalse(new MoveIntakeToPosition(0, 10, m_intakeArm)
+        //     .alongWith(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)));
 
         joystick.leftBumper().onTrue(new SetIntakeWheelsVelocity(-90, 10, m_intakeWheels)
                 .alongWith(new SetIndexerVelocity(-90, 10, m_indexer))
