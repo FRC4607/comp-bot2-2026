@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.525235378031383,
-        "y": 4.028530670470756
+        "x": 1.6583452211126959,
+        "y": 6.965606276747503
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.564051355206847,
-        "y": 7.392582025677603
+        "x": 2.2923395149786017,
+        "y": 6.9397289586305275
       },
       "isLocked": false,
       "linkedName": "Follow Left P.1 End"
@@ -46,6 +46,10 @@
   ],
   "rotationTargets": [
     {
+      "waypointRelativePos": 0.5659314875645258,
+      "rotationDegrees": 0.0
+    },
+    {
       "waypointRelativePos": 1.001407789770051,
       "rotationDegrees": 0.0
     }
@@ -69,7 +73,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.50258166672103
+    "rotation": -143.74616226255523
   },
   "useDefaultConstraints": true
 }

@@ -22,6 +22,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Preferences;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -75,6 +76,8 @@ public class Robot extends TimedRobot {
 
         m_robotContainer.m_leftTurret.resetsetPosition();
         m_robotContainer.m_rightTurret.resetsetPosition();
+
+        RobotController.setBrownoutVoltage(6.3);
     }
 
     @Override
