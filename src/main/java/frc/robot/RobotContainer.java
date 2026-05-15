@@ -318,6 +318,9 @@ public class RobotContainer {
         joystick.back().onTrue(new LeftZeroHoodSequence(m_leftHood)
             .alongWith(new RightZeroHoodSequence(m_rightHood)));
 
+        operatorRedL.onTrue(new InstantCommand(() -> joystick.setRumble(RumbleType.kBothRumble, 1)))
+            .onFalse(new InstantCommand(() -> joystick.setRumble(RumbleType.kBothRumble, 0)));
+
         operator3Way1Up.onTrue(
             new InstantCommand(() -> m_leftChamber.disable(false))
             .alongWith(new InstantCommand(() -> m_leftTurret.disable(false)))
