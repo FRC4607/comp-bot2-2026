@@ -50,7 +50,7 @@ public class Indexer extends SubsystemBase {
 
         // Current limit
         m_talonFXConfig.CurrentLimits.StatorCurrentLimit = IndexerCalibrations.kMaxAmperage;
-        m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = IndexerCalibrations.kMaxSupplyAmperage;
+        //m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = IndexerCalibrations.kMaxSupplyAmperage;
 
         m_motor1.getConfigurator().apply(m_talonFXConfig);
     }

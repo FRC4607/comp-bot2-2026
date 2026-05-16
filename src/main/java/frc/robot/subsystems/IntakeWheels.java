@@ -48,7 +48,7 @@ public class IntakeWheels extends SubsystemBase {
 
         // Current limit
         m_talonFXConfig.CurrentLimits.StatorCurrentLimit = IntakeWheelCalibrations.kMaxAmperage;
-        m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = IntakeWheelCalibrations.kMaxSupplyAmperage;
+        //m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = IntakeWheelCalibrations.kMaxSupplyAmperage;
 
         m_motor1.getConfigurator().apply(m_talonFXConfig);
     }

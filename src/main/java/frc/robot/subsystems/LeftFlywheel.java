@@ -51,7 +51,7 @@ public class LeftFlywheel extends SubsystemBase {
 
         // Current limits
         m_talonFXConfig.CurrentLimits.StatorCurrentLimit = LeftFlywheelCalibrations.kMaxAmperage;
-        m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = LeftFlywheelCalibrations.kMaxSupplyAmperage;
+        //m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = LeftFlywheelCalibrations.kMaxSupplyAmperage;
 
 
         m_motor1.getConfigurator().apply(m_talonFXConfig);
