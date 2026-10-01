@@ -146,13 +146,33 @@ public class LeftTurret extends SubsystemBase {
      * @return the current position of the turret
      */
     public double getPosition() {
-        m_position = (m_encoder1.getAbsolutePosition().getValueAsDouble())
-                - (m_encoder2.getAbsolutePosition().getValueAsDouble());
+        // m_position = (m_encoder1.getAbsolutePosition().getValueAsDouble())
+        //         - (m_encoder2.getAbsolutePosition().getValueAsDouble());
 
+        // if (m_position >= 0) {
+        //     return (m_position * 2.35) * 360;
+        // } else {
+        //     return ((m_position + 1) * 2.35) * 360;
+        // }
+
+        // TODO: My suggested after GCR fix 
+        // for the issue where a turret will get confused if it goes backwards past the zero point
+        // 
+        m_position = (m_encoder1.getAbsolutePosition().getValueAsDouble())
+            - (m_encoder2.getAbsolutePosition().getValueAsDouble());
+        
+        // Convert to Degrees, and mitigate negatives in the difference of the encoders
         if (m_position >= 0) {
-            return (m_position * 2.35) * 360;
+            m_position = (m_position * 2.35) * 360;
         } else {
-            return ((m_position + 1) * 2.35) * 360;
+            m_position = ((m_position + 1) * 2.35) * 360;
+        }
+        
+        // If the turret is past the zero point backwards, make the position negative instead of wrapping around
+        if (m_position < 1.35) {
+            return m_position;
+        } else {
+            return m_position - 2.35;
         }
     }
 
@@ -162,7 +182,7 @@ public class LeftTurret extends SubsystemBase {
      * @return The setpoint in degrees.
      */
     public double getSetpoint() {
-        return m_motor.getClosedLoopReference().getValueAsDouble() * 360;
+        return m_request.Position * 360;
     }
 
     /**
@@ -178,6 +198,10 @@ public class LeftTurret extends SubsystemBase {
 
     public void disable(boolean disable) {
         m_disable = disable;
+    }
+
+    public boolean isDisabled() {
+        return m_disable;
     }
 
 }

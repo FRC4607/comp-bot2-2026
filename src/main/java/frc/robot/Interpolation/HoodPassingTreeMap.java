@@ -1,12 +1,12 @@
-package frc.robot;
+package frc.robot.Interpolation;
 
 import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.interpolation.InverseInterpolator;
 
-public class HoodInterpolatingTreeMap extends InterpolatingTreeMap<Double, Double> {
+public class HoodPassingTreeMap extends InterpolatingTreeMap<Double, Double> {
 
-    public HoodInterpolatingTreeMap() {
-        super(InverseInterpolator.forDouble(), HoodInterpolatingTreeMap::interpolateValues);
+    public HoodPassingTreeMap() {
+        super(InverseInterpolator.forDouble(), HoodPassingTreeMap::interpolateValues);
     }
 
     /**
@@ -25,14 +25,16 @@ public class HoodInterpolatingTreeMap extends InterpolatingTreeMap<Double, Doubl
     /**
      * Factory method to create and populate the tree map with default values.
      *
-     * @return A populated HoodInterpolatingTreeMap.
+     * @return A populated HoodPassingTreeMap.
      */
-    public static HoodInterpolatingTreeMap createDefaultMap() {
-        HoodInterpolatingTreeMap map = new HoodInterpolatingTreeMap();
-        map.put(1.016, 0.35);
-        map.put(1.672, 0.85);
-        map.put(3.501, 1.6);
-        map.put(4.466, 2.25);
+    public static HoodPassingTreeMap createDefaultMap() {
+        HoodPassingTreeMap map = new HoodPassingTreeMap();
+        map.put(1.0, 2.25);
+        map.put(2.0, 2.25);
+        map.put(4.5, 1.3);
+        map.put(6.0, 2.25);
+        map.put(8.5, 2.25);
+        map.put(14.0, 2.25);
         return map;
     }
 

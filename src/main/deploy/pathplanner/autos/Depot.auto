@@ -11,26 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Red Trench Depot Neutral Sweep 1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Trench Depot Shot"
+                  "pathName": "Depot P.1"
                 }
               },
               {
@@ -40,13 +21,13 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.5
+                        "waitTime": 3.0
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Raise Intake Arm"
+                        "name": "Intake"
                       }
                     }
                   ]
@@ -56,44 +37,19 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Shooting"
-          }
-        },
-        {
           "type": "deadline",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Red Trench Depot Neutral Sweep 2"
+                  "pathName": "Depot P.2"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Trench Depot Shot"
+                  "name": "Stop Intaking"
                 }
               },
               {
@@ -103,13 +59,13 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.5
+                        "waitTime": 2.0
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Raise Intake Arm"
+                        "name": "General Shot"
                       }
                     }
                   ]
@@ -122,6 +78,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "RED AUTOS",
+  "folder": null,
   "choreoAuto": false
 }

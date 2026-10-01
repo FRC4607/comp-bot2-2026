@@ -3,37 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 0.4550499286733236,
+        "y": 5.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0,
-        "y": 6.0
+        "x": 1.6324679029957196,
+        "y": 4.74015691868759
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Depot P.1 End"
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 4.0
+        "x": 1.8783024251069897,
+        "y": 3.925021398002854
       },
       "prevControl": {
-        "x": 2.0,
-        "y": 5.0
+        "x": 2.318216833095578,
+        "y": 5.516476462196862
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 120.60956673882337
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -41,14 +46,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": -90.0
+    "velocity": 0,
+    "rotation": 91.23197740263973
   },
   "reversed": false,
-  "folder": "TEST PATHS",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -91.27452842065125
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

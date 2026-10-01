@@ -32,32 +32,32 @@
     },
     {
       "anchor": {
-        "x": 5.876348074179743,
-        "y": 2.7605420827389446
+        "x": 6.238630527817403,
+        "y": 2.3853209700427964
       },
       "prevControl": {
-        "x": 6.600912981455065,
-        "y": 3.7180028530670475
+        "x": 5.941041369472182,
+        "y": 3.498045649072753
       },
       "nextControl": {
-        "x": 5.531214216909699,
-        "y": 2.3044723427749583
+        "x": 6.878374623432464,
+        "y": -0.006765648343955988
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.9004564907275316,
-        "y": 2.6182168330955777
+        "x": 4.27,
+        "y": 0.4685333333333336
       },
       "prevControl": {
-        "x": 3.4956348074179737,
-        "y": 2.320627674750357
+        "x": 5.100028530670471,
+        "y": 0.7550499286733237
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Red Trench Outpost"
     }
   ],
   "rotationTargets": [
@@ -66,25 +66,19 @@
       "rotationDegrees": 113.25541124774632
     },
     {
-      "waypointRelativePos": 2.3,
-      "rotationDegrees": -177.4779492405879
-    }
-  ],
-  "constraintZones": [
+      "waypointRelativePos": 1.8869936034115153,
+      "rotationDegrees": -143.1659510853485
+    },
     {
-      "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.8392977717758217,
-      "maxWaypointRelativePos": 3.0,
-      "constraints": {
-        "maxVelocity": 2.0,
-        "maxAcceleration": 3.5,
-        "maxAngularVelocity": 540.0,
-        "maxAngularAcceleration": 720.0,
-        "nominalVoltage": 12.0,
-        "unlimited": false
-      }
+      "waypointRelativePos": 2.289978678038373,
+      "rotationDegrees": 35.2683403045204
+    },
+    {
+      "waypointRelativePos": 2.558635394456288,
+      "rotationDegrees": 0.0
     }
   ],
+  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -97,7 +91,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -145.24408744645862
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "RED PATHS",

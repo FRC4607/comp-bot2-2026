@@ -3,84 +3,80 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.27,
-        "y": 0.4685333333333336
+        "x": 3.56,
+        "y": 4.96
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.247845934379456,
-        "y": 0.6644793152639101
+        "x": 3.158901569186877,
+        "y": 7.702995720399429
       },
       "isLocked": false,
-      "linkedName": "Blue Trench Outpost"
+      "linkedName": "Bump Left"
     },
     {
       "anchor": {
-        "x": 7.817146932952923,
-        "y": 2.2171184022824537
+        "x": 1.9931330242510696,
+        "y": 7.528665327658384
       },
       "prevControl": {
-        "x": 7.857075019464678,
-        "y": 1.5449956126679367
+        "x": 3.120413694721825,
+        "y": 7.496091298145506
       },
       "nextControl": {
-        "x": 7.739514978601994,
-        "y": 3.5239229671897285
+        "x": 1.21169032353834,
+        "y": 7.551245984155412
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.186875891583452,
-        "y": 2.6829101283880177
+        "x": 0.4550499286733236,
+        "y": 7.004422253922967
       },
       "prevControl": {
-        "x": 6.1351212553495,
-        "y": 3.7697574893009986
+        "x": 0.429172610556348,
+        "y": 7.651355206847361
       },
       "nextControl": {
-        "x": 6.2140803706507555,
-        "y": 2.1116160679746496
+        "x": 0.4650419382605415,
+        "y": 6.7546220142425195
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.27,
-        "y": 0.4685333333333336
+        "x": 0.4550499286733236,
+        "y": 5.05
       },
       "prevControl": {
-        "x": 7.040827389443652,
-        "y": 0.6127246790299581
+        "x": 0.41623395149785986,
+        "y": 5.878758915834522
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Blue Trench Outpost"
+      "linkedName": "Depot P.1 End"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.6396588486140837,
-      "rotationDegrees": 113.25541124774632
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -90.0
     },
     {
-      "waypointRelativePos": 2.3,
-      "rotationDegrees": 161.5739653929384
-    },
-    {
-      "waypointRelativePos": 2.705756929637531,
-      "rotationDegrees": 36.38325926160953
+      "waypointRelativePos": 2.0,
+      "rotationDegrees": -90.0
     }
   ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.8392977717758217,
+      "minWaypointRelativePos": 1.74206617150573,
       "maxWaypointRelativePos": 3.0,
       "constraints": {
-        "maxVelocity": 2.0,
+        "maxVelocity": 1.0,
         "maxAcceleration": 3.5,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -101,10 +97,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -91.27452842065125
   },
   "reversed": false,
-  "folder": "BLUE PATHS",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

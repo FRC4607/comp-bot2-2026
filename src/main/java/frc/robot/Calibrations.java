@@ -57,7 +57,7 @@ public class Calibrations {
     public class IntakeWheelCalibrations {
 
         /** Max acceleration of the mechanism. */
-        public static final double kMaxAcceleration = 90;
+        public static final double kMaxAcceleration = 200;
 
         /** Static feedforward. */
         public static final double kS = 24;
@@ -76,6 +76,15 @@ public class Calibrations {
 
         /** Maximum amperage of the motor. */
         public static final double kMaxAmperage = 80;
+
+        /** Maximum supply current limit of the motor. */
+        public static final double kMaxSupplyAmperage = 40;
+
+        /** When using the SetIntakeWheelsVelocity method, take the last n readings of StatorCurrent from the motor. */
+        public static final int kCurrentLimitSamplings = 10;
+
+        /** Threshold for the mean current draw of the intake motors, over the last n samples. */
+        public static final double kMeanCurrentLimit = 75;
     }
 
     /** Calibrations for the spindexer. */
@@ -101,6 +110,8 @@ public class Calibrations {
 
         /** Amperage limit of the motors. */
         public static final double kMaxAmperage = 80;
+
+        public static final double kMaxSupplyAmperage = 15;
         
     }
 
@@ -127,6 +138,9 @@ public class Calibrations {
 
         /** Amperage limit of the motors. */
         public static final double kMaxAmperage = 80;
+
+        /** Supply current limit of the motors. */
+        public static final double kMaxSupplyAmperage = 30;
         
     }
 
@@ -232,8 +246,11 @@ public class Calibrations {
         /** Max acceleration of the mechanism. */
         public static final double kMaxAcceleration = 0;
 
-        /** Current limit of each motor. */
+        /** Stator current limit of each motor. */
         public static final double kMaxAmperage = 80;
+
+        /** Supply current limit of each motor. */
+        public static final double kMaxSupplyAmperage = 30;
     }
 
     /** Calibrations for the right chamber. */
@@ -260,6 +277,8 @@ public class Calibrations {
         /** Amperage limit of the motors. */
         public static final double kMaxAmperage = 80;
 
+        /** Supply current limit of the motors. */
+        public static final double kMaxSupplyAmperage = 30;
     }
 
     /** Calibrations for the right turret. */
@@ -367,6 +386,9 @@ public class Calibrations {
 
         /** Current limit of each motor. */
         public static final double kMaxAmperage = 80;
+
+        /** Supply current limit of each motor. */
+        public static final double kMaxSupplyAmperage = 30;
     }
 
 
@@ -453,7 +475,7 @@ public class Calibrations {
         public static final double kLeftTurretAngleTolerance = 1;
 
         /** Chamber Velocity. */
-        public static final double kLeftChamberVelocity = 60;
+        public static final double kLeftChamberVelocity = 62;
 
         /** Chamber Velocity Tolerance. */
         public static final double kLeftChamberVelocityTolerance = 90;
@@ -496,7 +518,7 @@ public class Calibrations {
     public class OutpostTrenchShotCalibrations {
 
         /** LeftFlywheel Velocity. */
-        public static final double kLeftFlywheelVelocity = 58;
+        public static final double kLeftFlywheelVelocity = 59;
 
         /** LeftFlywheel Velocity Tolerance. */
         public static final double kLeftFlywheelVelocityTolerance = 1;
@@ -520,7 +542,7 @@ public class Calibrations {
         public static final double kLeftChamberVelocityTolerance = 90;
 
         /** Right Flywheel Velocity. */
-        public static final double kRightFlywheelVelocity = 61;
+        public static final double kRightFlywheelVelocity = 59;
 
         /** Right Flywheel Velocity Tolerance. */
         public static final double kRightFlywheelVelocityTolerance = 1;
@@ -692,13 +714,13 @@ public class Calibrations {
          * Correction amount for velocity offset. 
          * Increasing will make it counter velocity more overall.
          */
-        public static final double kVelocityOffsetMult = 0.2;
+        public static final double kVelocityOffsetMult = 0.15;
 
         /** 
          * Multiplier for distance, to use in velocity offset. Increasing this value will make it
          * counter velocity more at long range.
          */
-        public static final double kVelocityDistanceMult = 1.5; // 1.1
+        public static final double kVelocityDistanceMult = 2.0; // 1.6
         
         /** 
          * Constant to add to the distance, after multiplier, to use in the velocity offset.

@@ -25,7 +25,9 @@ import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.LeftTurretConstants;
 import frc.robot.Constants.RightTurretConstants;
 import frc.robot.Interpolation.FlywheelInterpolatingTreeMap;
+import frc.robot.Interpolation.FlywheelPassingTreeMap;
 import frc.robot.Interpolation.HoodInterpolatingTreeMap;
+import frc.robot.Interpolation.HoodPassingTreeMap;
 import frc.robot.Robot;
 import frc.robot.Calibrations.ShootingCalibrations;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -37,7 +39,7 @@ import frc.robot.subsystems.RightHood;
 import frc.robot.subsystems.RightTurret;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class PointAtHub extends Command {
+public class PointToPass extends Command {
 
     private CommandSwerveDrivetrain m_drivetrain;
     private LeftTurret m_leftTurret;
@@ -47,7 +49,10 @@ public class PointAtHub extends Command {
     private RightHood m_rightHood;
     private RightFlywheel m_rightFlywheel;
 
-    private Translation2d m_targetHubPose;
+    private Translation2d m_leftTargetPose;
+    private Translation2d m_rightTargetPose;
+
+    private Alliance m_alliance;
 
     private Pose2d m_leftTurretPose;
     private Pose2d m_rightTurretPose;
@@ -55,8 +60,8 @@ public class PointAtHub extends Command {
     private Transform2d m_leftTurretTransform2d;
     private Transform2d m_rightTurretTransform2d;
 
-    private HoodInterpolatingTreeMap m_hoodMap;
-    private FlywheelInterpolatingTreeMap m_flywheelMap;
+    private HoodPassingTreeMap m_hoodMap;
+    private FlywheelPassingTreeMap m_flywheelMap;
 
     private double m_drivetrainAngle;
     
@@ -73,7 +78,7 @@ public class PointAtHub extends Command {
     private ChassisSpeeds m_speeds;
 
     /** Creates a new PointAtHub. */
-    public PointAtHub(CommandSwerveDrivetrain drivetrain, LeftTurret leftTurret, LeftHood leftHood, LeftFlywheel leftFlywheel, RightTurret rightTurret, RightHood rightHood, RightFlywheel rightFlywheel) {
+    public PointToPass(CommandSwerveDrivetrain drivetrain, LeftTurret leftTurret, LeftHood leftHood, LeftFlywheel leftFlywheel, RightTurret rightTurret, RightHood rightHood, RightFlywheel rightFlywheel) {
         m_drivetrain = drivetrain;
         m_leftTurret = leftTurret;
         m_leftHood = leftHood;
@@ -85,8 +90,8 @@ public class PointAtHub extends Command {
         m_leftTurretTransform2d = new Transform2d(new Translation2d(-0.206375, 0.180975), new Rotation2d(0));
         m_rightTurretTransform2d = new Transform2d(new Translation2d(-0.206375, -0.180975), new Rotation2d(0));
 
-        m_hoodMap = HoodInterpolatingTreeMap.createDefaultMap();
-        m_flywheelMap = FlywheelInterpolatingTreeMap.createDefaultMap();
+        m_hoodMap = HoodPassingTreeMap.createDefaultMap();
+        m_flywheelMap = FlywheelPassingTreeMap.createDefaultMap();
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(m_leftTurret, m_leftHood, m_leftFlywheel);
     }
@@ -95,23 +100,46 @@ public class PointAtHub extends Command {
     @Override
     public void initialize() {
 
-        Optional<Alliance> alliance = DriverStation.getAlliance();
-        if (alliance.get() == Alliance.Red) {
-            m_targetHubPose = FieldConstants.kRedHub;
-            System.out.println("Aiming at Red Hub");
-        } else {
-            m_targetHubPose = FieldConstants.kBlueHub;
-            System.out.println("Aiming at Blue Hub");
-        }
+        m_alliance = DriverStation.getAlliance().get();
+
         
         m_drivetrainAngle = m_drivetrain.getState().Pose.getRotation().getDegrees();
     }
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        
         m_leftTurretPose = m_drivetrain.getState().Pose.plus(m_leftTurretTransform2d);
-        m_rightTurretPose = m_drivetrain.getState().Pose.plus(m_rightTurretTransform2d);
+        
+        if (m_alliance == Alliance.Red) {
+            if (m_leftTurretPose.getY() < FieldConstants.kFieldMiddle.getY()) {
+                m_leftTargetPose = FieldConstants.kRedDepotPassCorner;
+            } else {
+                m_leftTargetPose = FieldConstants.kRedOutpostPassCorner;
+            }
+        } else {
+            if (m_leftTurretPose.getY() < FieldConstants.kFieldMiddle.getY()) {
+                m_leftTargetPose = FieldConstants.kBlueOutpostPassCorner;
+            } else {
+                m_leftTargetPose = FieldConstants.kBlueDepotPassCorner;
+            }
+        }
 
+        m_rightTurretPose = m_drivetrain.getState().Pose.plus(m_rightTurretTransform2d);
+        
+        if (m_alliance == Alliance.Red) {
+            if (m_rightTurretPose.getY() < FieldConstants.kFieldMiddle.getY()) {
+                m_rightTargetPose = FieldConstants.kRedDepotPassCorner;
+            } else {
+                m_rightTargetPose = FieldConstants.kRedOutpostPassCorner;
+            }
+        } else {
+            if (m_rightTurretPose.getY() < FieldConstants.kFieldMiddle.getY()) {
+                m_rightTargetPose = FieldConstants.kBlueOutpostPassCorner;
+            } else {
+                m_rightTargetPose = FieldConstants.kBlueDepotPassCorner;
+            }
+        }
 
         m_drivetrainAngle = m_drivetrain.getState().Pose.getRotation().getDegrees();
 
@@ -119,14 +147,14 @@ public class PointAtHub extends Command {
             m_drivetrain.getState().Speeds, m_drivetrain.getState().Pose.getRotation());
             
         m_leftDistance = Math.hypot(
-                m_leftTurretPose.getX() - m_targetHubPose.getX(), 
-                m_leftTurretPose.getY() - m_targetHubPose.getY());
+                m_leftTurretPose.getX() - m_leftTargetPose.getX(), 
+                m_leftTurretPose.getY() - m_leftTargetPose.getY());
         
-        m_leftOffestHubX = m_targetHubPose.getX() 
+        m_leftOffestHubX = m_leftTargetPose.getX() 
             - (m_speeds.vxMetersPerSecond * ShootingCalibrations.kVelocityOffsetMult 
             * ((ShootingCalibrations.kVelocityDistanceMult * m_leftDistance) + ShootingCalibrations.kVelocityDistanceConst));
 
-        m_leftOffsetHubY = m_targetHubPose.getY() 
+        m_leftOffsetHubY = m_leftTargetPose.getY() 
             - (m_speeds.vyMetersPerSecond * ShootingCalibrations.kVelocityOffsetMult 
             * ((ShootingCalibrations.kVelocityDistanceMult * m_leftDistance) + ShootingCalibrations.kVelocityDistanceConst));
 
@@ -165,14 +193,14 @@ public class PointAtHub extends Command {
         SignalLogger.writeDouble("Shooting/LeftFlywheelMult", SmartDashboard.getNumber(ShootingCalibrations.kLeftFlywheelDistanceMultPrefKey, ShootingCalibrations.kLeftFlywheelDistanceMult));
 
         m_rightDistance = Math.hypot(
-            m_rightTurretPose.getX() - m_targetHubPose.getX(), 
-            m_rightTurretPose.getY() - m_targetHubPose.getY());
+            m_rightTurretPose.getX() - m_rightTargetPose.getX(), 
+            m_rightTurretPose.getY() - m_rightTargetPose.getY());
         
-        m_rightOffestHubX = m_targetHubPose.getX() 
+        m_rightOffestHubX = m_rightTargetPose.getX() 
             - (m_speeds.vxMetersPerSecond * ShootingCalibrations.kVelocityOffsetMult 
             * ((ShootingCalibrations.kVelocityDistanceMult * m_rightDistance) + ShootingCalibrations.kVelocityDistanceConst));
 
-        m_rightOffsetHubY = m_targetHubPose.getY() 
+        m_rightOffsetHubY = m_rightTargetPose.getY() 
             - (m_speeds.vyMetersPerSecond * ShootingCalibrations.kVelocityOffsetMult 
             * ((ShootingCalibrations.kVelocityDistanceMult * m_rightDistance) + ShootingCalibrations.kVelocityDistanceConst));
 
@@ -203,6 +231,8 @@ public class PointAtHub extends Command {
 
         // Include the operater-entered value in the signal logger for checking later
         SignalLogger.writeDouble("Shooting/RightFlywheelMult", SmartDashboard.getNumber(ShootingCalibrations.kRightFlywheelDistanceMultPrefKey, ShootingCalibrations.kRightFlywheelDistanceMult));
+
+        // SmartDashboard.putNumber("right distance", m_rightDistance);
 
         // SmartDashboard.putNumber("Right Turret Distance To Hub", m_rightDistance);
     }

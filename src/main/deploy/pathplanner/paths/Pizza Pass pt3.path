@@ -3,53 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.0,
-        "y": 8.09
+        "x": 3.1851069900142646,
+        "y": 7.625477888736789
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.027661063685749e-16,
-        "y": 3.145454248859794
+        "x": 2.072382310984308,
+        "y": 7.509029957203994
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Blue Depot Pass Return 2"
     },
     {
       "anchor": {
-        "x": 3.52151212553495,
-        "y": 6.034022824536376
+        "x": 0.5714978601997143,
+        "y": 7.276134094151213
       },
       "prevControl": {
-        "x": 2.9795765122649245,
-        "y": 7.659829664346453
-      },
-      "nextControl": {
-        "x": 4.478972895863052,
-        "y": 3.161640513552068
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 16.565,
-        "y": 0.0
-      },
-      "prevControl": {
-        "x": 14.986485930408373,
-        "y": 4.72261133699498
+        "x": 1.6712838801711836,
+        "y": 6.370427960057063
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5490973139586116,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.5633100697906226,
-      "maxWaypointRelativePos": 1.476570289132591,
+      "minWaypointRelativePos": 0.4898720682302766,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 1.0,
         "maxAcceleration": 3.5,
@@ -63,8 +52,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -72,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 97.8152935467669
   },
   "reversed": false,
   "folder": "TEST PATHS",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 2.0,
+    "rotation": 180.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.*;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import frc.robot.Calibrations.ShootingCalibrations;
 import frc.robot.Commands.DepotTrenchShot;
+import frc.robot.Commands.GeneralPass;
 import frc.robot.Commands.HubShot;
 import frc.robot.Commands.LeftMoveHoodToPosition;
 import frc.robot.Commands.LeftMoveTurretToPosition;
@@ -46,12 +47,16 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -63,6 +68,7 @@ import frc.robot.subsystems.LeftHood;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeWheels;
+import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LeftTurret;
 import frc.robot.subsystems.RightChamber;
 import frc.robot.subsystems.RightFlywheel;
@@ -82,7 +88,7 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController joystick = new CommandXboxController(0);
+    public final CommandXboxController joystick = new CommandXboxController(0);
     public final Joystick m_operator = new Joystick(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
@@ -97,6 +103,8 @@ public class RobotContainer {
     public final RightHood m_rightHood = new RightHood();
     public final RightChamber m_rightChamber = new RightChamber();
     public final RightTurret m_rightTurret = new RightTurret();
+
+    public final LEDSubsystem m_ledSubsystem = new LEDSubsystem();
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
@@ -113,6 +121,8 @@ public class RobotContainer {
             new HubShot(m_leftFlywheel, m_leftHood, m_leftTurret, m_indexer, m_leftChamber, m_rightFlywheel, m_rightHood, m_rightTurret, m_rightChamber));
         NamedCommands.registerCommand("General Shot", 
             new GeneralShot(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel));
+        NamedCommands.registerCommand("Pass", 
+            new GeneralPass(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel));
         NamedCommands.registerCommand("Stop Shooting",
             new ParallelDeadlineGroup(
                 new LeftZeroHoodSequence(m_leftHood),
@@ -127,7 +137,7 @@ public class RobotContainer {
             .alongWith(new SetIntakeWheelsVelocity(5, 10, m_intakeWheels)));
         NamedCommands.registerCommand("Intake", 
             new MoveIntakeToPosition(130, 10, m_intakeArm).withTimeout(2)
-            .andThen(new SetIntakeWheelsVelocity(90, 1, m_intakeWheels).withTimeout(1)));
+            .andThen(new SetIntakeWheelsVelocity(90, 1, m_intakeWheels)));
         NamedCommands.registerCommand("Stop Intaking",
             new SetIntakeWheelsVelocity(5, 10, m_intakeWheels));
         NamedCommands.registerCommand("Raise Intake Arm",
@@ -193,31 +203,37 @@ public class RobotContainer {
         // reset the field-centric heading on start press
         joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
+        joystick.x().onTrue(
+            new ConditionalCommand(
+                new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kBlueZeroCorner)), 
+                new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kRedZeroCorner)), 
+                () -> DriverStation.getAlliance().get() == Alliance.Blue));
+
         drivetrain.registerTelemetry(logger::telemeterize);
 
         // joystick.back().onTrue(new MoveIntakeToPosition(0, 10, m_intakeArm)
         //     .alongWith(new SetIntakeWheelsOpenLoop(() -> 0.0, m_intakeWheels)));
 
-        joystick.rightBumper().and(operatorBlueL)
-            .onTrue(new MoveIntakeToPosition(70, 20, m_intakeArm)
-                .alongWith(new SetIntakeWheelsVelocity(90, 80, m_intakeWheels))
-                /* .alongWith(new SetIndexerVelocity(90.0, 0, m_indexer)) */)
-            .onFalse(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)
-                /*.alongWith(new SetIndexerVelocity(0, 0, m_indexer)) */);
+        // joystick.rightBumper().and(operatorBlueL)
+        //     .onTrue(new MoveIntakeToPosition(130, 20, m_intakeArm)
+        //         .alongWith(new SetIntakeWheelsVelocity(90, 80, m_intakeWheels))
+        //         /* .alongWith(new SetIndexerVelocity(90.0, 0, m_indexer)) */)
+        //     .onFalse(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)
+        //         /*.alongWith(new SetIndexerVelocity(0, 0, m_indexer)) */);
 
-        joystick.rightBumper().and(operatorBlueL.negate())
-            .onTrue(new MoveIntakeToPosition(70, 20, m_intakeArm)
+        joystick.rightBumper()
+            .onTrue(new MoveIntakeToPosition(130, 20, m_intakeArm)
                 .alongWith(new SetIntakeWheelsVelocity(90, 80, m_intakeWheels))
                 /* .alongWith(new SetIndexerVelocity(0, 0, m_indexer)) */)
             .onFalse(new MoveIntakeToPosition(0, 20, m_intakeArm)
                 .alongWith(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels))
                 /* .alongWith(new SetIndexerVelocity(90.0, 0, m_indexer)) */);
 
-        operatorBlueL.onFalse(new MoveIntakeToPosition(0, 10, m_intakeArm)
-            .alongWith(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)));
+        // operatorBlueL.onFalse(new MoveIntakeToPosition(0, 10, m_intakeArm)
+        //     .alongWith(new SetIntakeWheelsVelocity(10, 10, m_intakeWheels)));
 
-        joystick.leftBumper().onTrue(new SetIntakeWheelsVelocity(-10, 10, m_intakeWheels)
-                .alongWith(new SetIndexerVelocity(-30, 10, m_indexer))
+        joystick.leftBumper().onTrue(new SetIntakeWheelsVelocity(-90, 10, m_intakeWheels)
+                .alongWith(new SetIndexerVelocity(-90, 10, m_indexer))
                 .alongWith(new LeftSetChamberVelocity(-10, 10, false, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel))
                 .alongWith(new RightSetChamberVelocity(-10, 10, false, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel)))
             .onFalse(new SetIntakeWheelsVelocity(0, 10, m_intakeWheels)
@@ -226,10 +242,10 @@ public class RobotContainer {
                 .alongWith(new RightSetChamberOpenLoop(() -> 0, m_rightChamber)));
 
         joystick.y().onTrue(
-            new InstantCommand(() -> MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 0.2)
-            .alongWith(new InstantCommand(() -> MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond) * 0.2))
+            new InstantCommand(() -> MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 1.0)
+            .alongWith(new InstantCommand(() -> MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond) * 1.0))
             .alongWith(new ConditionalCommand(
-                new PassWithGyro(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
+                new GeneralPass(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
                 new GeneralShot(drivetrain, m_indexer, m_leftChamber, m_leftTurret, m_leftHood, m_leftFlywheel, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel),
                 () -> (drivetrain.getState().Pose.getX() > FieldConstants.kBlueHub.getX() && DriverStation.getAlliance().get() == Alliance.Blue) || (drivetrain.getState().Pose.getX() < FieldConstants.kRedHub.getX() && DriverStation.getAlliance().get() == Alliance.Red))))
                 .onFalse(new LeftRunFlywheelOpenLoop(() -> 0, m_leftFlywheel)
@@ -282,7 +298,8 @@ public class RobotContainer {
                 .alongWith(new LeftRunTurretOpenLoop(() -> 0, m_leftTurret)
                 .alongWith(new RightSetChamberVelocity(0, 90, false, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel)
                 .alongWith(new RightMoveHoodToPosition(0, 0.1, m_rightHood)
-                .alongWith(new RightRunTurretOpenLoop(() -> 0, m_rightTurret)))))))));
+                .alongWith(new RightRunTurretOpenLoop(() -> 0, m_rightTurret)
+                .alongWith(new RightRunFlywheelOpenLoop(() -> 0, m_rightFlywheel))))))))));
 
         joystick.axisGreaterThan(2, 0.8).onTrue(new DepotTrenchShot(m_leftFlywheel, m_leftHood, m_leftTurret, m_indexer, m_leftChamber, m_rightFlywheel, m_rightHood, m_rightTurret, m_rightChamber))
             .onFalse(new LeftRunFlywheelOpenLoop(() -> 0, m_leftFlywheel)
@@ -292,7 +309,8 @@ public class RobotContainer {
                 .alongWith(new LeftRunTurretOpenLoop(() ->0, m_leftTurret)
                 .alongWith(new RightSetChamberVelocity(0, 90, false, m_rightChamber, m_rightTurret, m_rightHood, m_rightFlywheel)
                 .alongWith(new RightMoveHoodToPosition(0, 0.1, m_rightHood)
-                .alongWith(new RightRunTurretOpenLoop(() -> 0, m_rightTurret)))))))));
+                .alongWith(new RightRunTurretOpenLoop(() -> 0, m_rightTurret)
+                .alongWith(new RightRunFlywheelOpenLoop(() -> 0, m_rightFlywheel))))))))));
 
         // // A command to find the radius of the wheels.
         // //joystick.povRight().onTrue(new WheelRadiusCalibration(drivetrain, drive));
@@ -300,29 +318,36 @@ public class RobotContainer {
         joystick.back().onTrue(new LeftZeroHoodSequence(m_leftHood)
             .alongWith(new RightZeroHoodSequence(m_rightHood)));
 
+        operatorRedL.onTrue(new InstantCommand(() -> joystick.setRumble(RumbleType.kBothRumble, 1)))
+            .onFalse(new InstantCommand(() -> joystick.setRumble(RumbleType.kBothRumble, 0)));
+
         operator3Way1Up.onTrue(
             new InstantCommand(() -> m_leftChamber.disable(false))
             .alongWith(new InstantCommand(() -> m_leftTurret.disable(false)))
             .alongWith(new InstantCommand(() -> m_leftHood.disable(false)))
-            .alongWith(new InstantCommand(() -> m_leftFlywheel.disable(false))));
+            .alongWith(new InstantCommand(() -> m_leftFlywheel.disable(false)))
+            .alongWith(new InstantCommand(() -> m_ledSubsystem.clearAnimation(1))));
 
         operator3Way1Down.onTrue(
             new InstantCommand(() -> m_leftChamber.disable(true))
             .alongWith(new InstantCommand(() -> m_leftTurret.disable(true)))
             .alongWith(new InstantCommand(() -> m_leftHood.disable(true)))
-            .alongWith(new InstantCommand(() -> m_leftFlywheel.disable(true))));
+            .alongWith(new InstantCommand(() -> m_leftFlywheel.disable(true)))
+            .alongWith(new InstantCommand(() -> m_ledSubsystem.set(1, LEDSubsystem.kStrobeFastPurple))));
 
         operator3Way2Up.onTrue(
             new InstantCommand(() -> m_rightChamber.disable(false))
             .alongWith(new InstantCommand(() -> m_rightTurret.disable(false)))
             .alongWith(new InstantCommand(() -> m_rightHood.disable(false)))
-            .alongWith(new InstantCommand(() -> m_rightFlywheel.disable(false))));
+            .alongWith(new InstantCommand(() -> m_rightFlywheel.disable(false)))
+            .alongWith(new InstantCommand(() -> m_ledSubsystem.clearAnimation(1))));
 
         operator3Way2Down.onTrue(
             new InstantCommand(() -> m_rightChamber.disable(true))
             .alongWith(new InstantCommand(() -> m_rightTurret.disable(true)))
             .alongWith(new InstantCommand(() -> m_rightHood.disable(true)))
-            .alongWith(new InstantCommand(() -> m_rightFlywheel.disable(true))));
+            .alongWith(new InstantCommand(() -> m_rightFlywheel.disable(true)))
+            .alongWith(new InstantCommand(() -> m_ledSubsystem.set(3, LEDSubsystem.kStrobeFastPurple))));
 
         operator3Way3Up.onTrue(
             new InstantCommand(() -> m_rightChamber.reverseWhenDisabled(true))
@@ -403,4 +428,13 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         return  autoChooser.getSelected();
     }
+
+    public Command RumblePulseFast = new RepeatCommand(new ParallelDeadlineGroup(
+                                                new WaitCommand(0.1),
+                                                new InstantCommand(
+                                                        () -> joystick.setRumble(RumbleType.kBothRumble, 1)))
+                                                .andThen(new ParallelDeadlineGroup(
+                                                        new WaitCommand(0.1),
+                                                        new InstantCommand(() -> joystick
+                                                                .setRumble(RumbleType.kBothRumble, 0)))));
 }

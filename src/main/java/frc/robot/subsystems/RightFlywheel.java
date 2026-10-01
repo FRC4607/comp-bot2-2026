@@ -50,6 +50,7 @@ public class RightFlywheel extends SubsystemBase {
 
         // Current limit
         m_talonFXConfig.CurrentLimits.StatorCurrentLimit = RightFlywheelCalibrations.kMaxAmperage;
+        //m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = RightFlywheelCalibrations.kMaxSupplyAmperage;
 
         m_motor1.getConfigurator().apply(m_talonFXConfig);
         m_motor2.getConfigurator().apply(m_talonFXConfig);
@@ -60,8 +61,15 @@ public class RightFlywheel extends SubsystemBase {
 
     public void updateSetpoint(double newSetpoint) {
         if (!m_disable) {
-            m_motor1.setControl(m_request
+
+            // Limits to 110 rps
+            if (newSetpoint > 110) {
+                m_motor1.setControl(m_request
+                    .withVelocity(110));
+            } else {
+                m_motor1.setControl(m_request
                     .withVelocity(newSetpoint));
+            }
         } else {
             m_motor1.set(0);
         }

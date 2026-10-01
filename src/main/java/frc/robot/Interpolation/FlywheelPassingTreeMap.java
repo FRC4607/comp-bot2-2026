@@ -1,12 +1,12 @@
-package frc.robot;
+package frc.robot.Interpolation;
 
 import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.interpolation.InverseInterpolator;
 
-public class FlywheelInterpolatingTreeMap extends InterpolatingTreeMap<Double, Double> {
+public class FlywheelPassingTreeMap extends InterpolatingTreeMap<Double, Double> {
 
-    public FlywheelInterpolatingTreeMap() {
-        super(InverseInterpolator.forDouble(), FlywheelInterpolatingTreeMap::interpolateValues);
+    public FlywheelPassingTreeMap() {
+        super(InverseInterpolator.forDouble(), FlywheelPassingTreeMap::interpolateValues);
     }
 
     /**
@@ -27,13 +27,14 @@ public class FlywheelInterpolatingTreeMap extends InterpolatingTreeMap<Double, D
      *
      * @return A populated GenericInterpolatingTreeMap.
      */
-    public static FlywheelInterpolatingTreeMap createDefaultMap() {
-        FlywheelInterpolatingTreeMap map = new FlywheelInterpolatingTreeMap();
-        map.put(1.016, 55.0);
-        map.put(1.672, 45.0);
-        map.put(3.501, 50.0);
-        map.put(4.466, 60.0);
-        map.put(5.72, 65.0);
+    public static FlywheelPassingTreeMap createDefaultMap() {
+        FlywheelPassingTreeMap map = new FlywheelPassingTreeMap();
+        map.put(1.0, 25.0);
+        map.put(2.0, 35.0);
+        map.put(4.5, 65.0);
+        map.put(6.0, 70.0);
+        map.put(8.5, 110.0);
+        map.put(14.0, 110.0);
         return map;
     }
 
