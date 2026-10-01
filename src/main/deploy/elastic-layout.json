@@ -1,0 +1,422 @@
+{
+  "version": 1.0,
+  "grid_size": 128,
+  "tabs": [
+    {
+      "name": "Autonomous",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Auto Mode",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 512.0,
+            "height": 128.0,
+            "type": "Dropdown Chooser",
+            "properties": {
+              "topic": "/Tunables/Auto Mode",
+              "period": 0.033,
+              "sort_options": false
+            }
+          },
+          {
+            "title": "Has Tags?",
+            "x": 512.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Telemetry/Has Tags?",
+              "period": 0.033,
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Hoods Down?",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Telemetry/Are Hoods Down?",
+              "period": 0.033,
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Field",
+            "x": 0.0,
+            "y": 128.0,
+            "width": 1024.0,
+            "height": 512.0,
+            "type": "Field",
+            "properties": {
+              "topic": "/Telemetry/Field",
+              "period": 0.033,
+              "field_game": "Rebuilt",
+              "robot_width": 0.8382,
+              "robot_length": 0.8509,
+              "show_other_objects": true,
+              "show_trajectories": true,
+              "field_rotation": 0.0,
+              "robot_color": 4294198070,
+              "trajectory_color": 4294967295,
+              "show_robot_outside_widget": true
+            }
+          },
+          {
+            "title": "Driver Station",
+            "x": 1024.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "DSInfo",
+            "properties": {
+              "topic": "/DriverStation",
+              "period": 0.033
+            }
+          },
+          {
+            "title": "Match Time",
+            "x": 1024.0,
+            "y": 128.0,
+            "width": 384.0,
+            "height": 256.0,
+            "type": "Match Time",
+            "properties": {
+              "topic": "/Telemetry/Match Time",
+              "period": 0.033,
+              "time_display_mode": "Minutes and Seconds",
+              "red_start_time": 15,
+              "yellow_start_time": 30
+            }
+          },
+          {
+            "title": "Reset Turret Position",
+            "x": 1024.0,
+            "y": 384.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/Tunables/Reset Turret Position",
+              "period": 0.033,
+              "show_type": false,
+              "maximize_button_space": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Teleop",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Hub Active",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 256.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Telemetry/Hub State",
+              "period": 0.033,
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Time Until Switch",
+            "x": 384.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 256.0,
+            "type": "Match Time",
+            "properties": {
+              "topic": "/Telemetry/Time Until Switch",
+              "period": 0.033,
+              "time_display_mode": "Seconds Only",
+              "red_start_time": 5,
+              "yellow_start_time": 10
+            }
+          },
+          {
+            "title": "Match Time",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 256.0,
+            "type": "Match Time",
+            "properties": {
+              "topic": "/Telemetry/Match Time",
+              "period": 0.033,
+              "time_display_mode": "Minutes and Seconds",
+              "red_start_time": 15,
+              "yellow_start_time": 30
+            }
+          },
+          {
+            "title": "Has Tags?",
+            "x": 1152.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Telemetry/Has Tags?",
+              "period": 0.033,
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Hoods Down?",
+            "x": 1152.0,
+            "y": 128.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Boolean Box",
+            "properties": {
+              "topic": "/Telemetry/Are Hoods Down?",
+              "period": 0.033,
+              "true_color": 4283215696,
+              "false_color": 4294198070,
+              "true_icon": "None",
+              "false_icon": "None"
+            }
+          },
+          {
+            "title": "Field",
+            "x": 0.0,
+            "y": 256.0,
+            "width": 768.0,
+            "height": 384.0,
+            "type": "Field",
+            "properties": {
+              "topic": "/Telemetry/Field",
+              "period": 0.033,
+              "field_game": "Rebuilt",
+              "robot_width": 0.8382,
+              "robot_length": 0.8509,
+              "show_other_objects": true,
+              "show_trajectories": true,
+              "field_rotation": 0.0,
+              "robot_color": 4294198070,
+              "trajectory_color": 4294967295,
+              "show_robot_outside_widget": true
+            }
+          },
+          {
+            "title": "Left Shot Power",
+            "x": 768.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Telemetry/Left Flywheel Distance Multiplier",
+              "period": 0.033,
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Left +",
+            "x": 1024.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/Tunables/Increase Left Shot Power",
+              "period": 0.033,
+              "show_type": false,
+              "maximize_button_space": true
+            }
+          },
+          {
+            "title": "Left -",
+            "x": 1280.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/Tunables/Decrease Left Shot Power",
+              "period": 0.033,
+              "show_type": false,
+              "maximize_button_space": true
+            }
+          },
+          {
+            "title": "Right Shot Power",
+            "x": 768.0,
+            "y": 384.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Telemetry/Right Flywheel Distance Multiplier",
+              "period": 0.033,
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Right +",
+            "x": 1024.0,
+            "y": 384.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/Tunables/Increase Right Shot Power",
+              "period": 0.033,
+              "show_type": false,
+              "maximize_button_space": true
+            }
+          },
+          {
+            "title": "Right -",
+            "x": 1280.0,
+            "y": 384.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/Tunables/Decrease Right Shot Power",
+              "period": 0.033,
+              "show_type": false,
+              "maximize_button_space": true
+            }
+          },
+          {
+            "title": "Reset Turret Position",
+            "x": 768.0,
+            "y": 512.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/Tunables/Reset Turret Position",
+              "period": 0.033,
+              "show_type": false,
+              "maximize_button_space": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pit",
+      "grid_layout": {
+        "layouts": [],
+        "containers": [
+          {
+            "title": "Preferences",
+            "x": 0.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 384.0,
+            "type": "RobotPreferences",
+            "properties": {
+              "topic": "/Preferences",
+              "period": 0.033
+            }
+          },
+          {
+            "title": "Driver Station",
+            "x": 384.0,
+            "y": 0.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "DSInfo",
+            "properties": {
+              "topic": "/DriverStation",
+              "period": 0.033
+            }
+          },
+          {
+            "title": "Auto Mode",
+            "x": 768.0,
+            "y": 0.0,
+            "width": 512.0,
+            "height": 128.0,
+            "type": "Dropdown Chooser",
+            "properties": {
+              "topic": "/Tunables/Auto Mode",
+              "period": 0.033,
+              "sort_options": false
+            }
+          },
+          {
+            "title": "Remaining Match Time",
+            "x": 384.0,
+            "y": 128.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Telemetry/Remaining Match Time",
+              "period": 0.033,
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Intake Speed",
+            "x": 640.0,
+            "y": 128.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Telemetry/Intake Speed",
+              "period": 0.033,
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Odometry Hz",
+            "x": 384.0,
+            "y": 256.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/DriveState/OdometryFrequency",
+              "period": 0.033,
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Reset Turret Position",
+            "x": 640.0,
+            "y": 256.0,
+            "width": 384.0,
+            "height": 128.0,
+            "type": "Command",
+            "properties": {
+              "topic": "/Tunables/Reset Turret Position",
+              "period": 0.033,
+              "show_type": false,
+              "maximize_button_space": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

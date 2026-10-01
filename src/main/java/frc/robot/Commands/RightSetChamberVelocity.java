@@ -4,7 +4,7 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import org.wpilib.command2.Command;
 import frc.robot.subsystems.RightChamber;
 import frc.robot.subsystems.RightFlywheel;
 import frc.robot.subsystems.RightHood;

@@ -1,12 +1,12 @@
 package frc.robot;
 
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.Inches;
-import static edu.wpi.first.units.Units.Rotation;
+import static org.wpilib.units.Units.Degrees;
+import static org.wpilib.units.Units.Inches;
+import static org.wpilib.units.Units.Rotation;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
+import org.wpilib.math.geometry.Translation2d;
 
 public class Constants {
 
@@ -37,7 +37,7 @@ public class Constants {
         public static final Pose2d kRedZeroCorner = new Pose2d(Inches.of(634.42378), Inches.of(16.75), Rotation2d.k180deg);
 
         /** Corner of the field on the blue depot side, for resetting pose. +16.75 inches X, -16.75 inches Y, to account for robot width.*/
-        public static final Pose2d kBlueZeroCorner = new Pose2d(Inches.of(16.75), Inches.of(300.9375), Rotation2d.kZero);
+        public static final Pose2d kBlueZeroCorner = new Pose2d(Inches.of(16.75), Inches.of(300.9375), Rotation2d.ZERO);
 
     }
     // 16.75

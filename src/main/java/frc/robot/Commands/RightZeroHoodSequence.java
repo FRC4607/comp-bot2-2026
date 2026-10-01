@@ -4,7 +4,7 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import org.wpilib.command2.SequentialCommandGroup;
 import frc.robot.subsystems.RightHood;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more

@@ -37,7 +37,7 @@
     "org.mockito.Mockito.*",
     "org.mockito.ArgumentMatchers.*",
     "org.mockito.Answers.*",
-    "edu.wpi.first.units.Units.*"
+    "org.wpilib.units.Units.*"
   ],
   "java.completion.filteredTypes": [
     "java.awt.*",
@@ -53,18 +53,10 @@
     "javax.swing.*",
     "javax.management.*",
     "javax.smartcardio.*",
-    "edu.wpi.first.math.proto.*",
-    "edu.wpi.first.math.**.proto.*",
-    "edu.wpi.first.math.**.struct.*",
+    "org.wpilib.math.proto.*",
+    "org.wpilib.math.**.proto.*",
+    "org.wpilib.math.**.struct.*",
   ],
-  "[java]": {
-    "editor.tabSize": 4,
-    "editor.detectIndentation": false,
-    "editor.insertSpaces": true
-  },
-  "editor.formatOnSave": false,
-  "java.checkstyle.configuration": "${workspaceFolder}/styleguide-frc4607.xml",
-  "java.checkstyle.version": "10.3",
-  "java.dependency.enableDependencyCheckup": false,
-  "wpilib.autoStartRioLog": false
+  "java.debug.settings.enableRunDebugCodeLens": false,
+  "java.dependency.enableDependencyCheckup": false
 }

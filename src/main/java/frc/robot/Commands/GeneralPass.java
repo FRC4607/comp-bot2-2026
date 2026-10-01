@@ -4,9 +4,9 @@
 
 package frc.robot.Commands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import org.wpilib.command2.ParallelCommandGroup;
+import org.wpilib.command2.SequentialCommandGroup;
+import org.wpilib.command2.WaitCommand;
 import frc.robot.subsystems.LeftChamber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LeftFlywheel;

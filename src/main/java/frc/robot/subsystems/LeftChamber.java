@@ -4,12 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
 import com.ctre.phoenix6.signals.InvertedValue;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.wpilib.command2.SubsystemBase;
 import frc.robot.Calibrations.IntakeArmCalibrations;
 import frc.robot.Calibrations.LeftChamberCalibrations;
 import frc.robot.Constants.LeftChamberConstants;
@@ -17,92 +19,93 @@ import frc.robot.Constants.LeftChamberConstants;
 /** Chamber subsystem. */
 public class LeftChamber extends SubsystemBase {
 
-    private final TalonFX m_motor1;
+  private final TalonFX m_motor1;
 
-    private final TalonFXConfiguration m_talonFXConfig;
+  private final TalonFXConfiguration m_talonFXConfig;
 
-    private final VelocityTorqueCurrentFOC m_request;
+  private final VelocityTorqueCurrentFOC m_request;
 
-    private boolean m_disable = false;
-    private boolean m_reverseWhenDisabled = true;
+  private boolean m_disable = false;
+  private boolean m_reverseWhenDisabled = true;
 
-    /** Creates and configures settings for the Chamber. */
-    public LeftChamber() {
+  /** Creates and configures settings for the Chamber. */
+  public LeftChamber() {
 
-        // Chamber Motor
-        m_motor1 = new TalonFX(LeftChamberConstants.kMotor1CANID, "kachow");
+    // Chamber Motor
+    m_motor1 = new TalonFX(LeftChamberConstants.kMotor1CANID, new CANBus("kachow"));
 
-        m_talonFXConfig = new TalonFXConfiguration();
+    m_talonFXConfig = new TalonFXConfiguration();
 
-        m_request = new VelocityTorqueCurrentFOC(0).withAcceleration(LeftChamberCalibrations.kMaxAcceleration);
+    m_request = new VelocityTorqueCurrentFOC(0).withAcceleration(LeftChamberCalibrations.kMaxAcceleration);
 
-        // Feedback settings
-        m_talonFXConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
-        m_talonFXConfig.Feedback.SensorToMechanismRatio = 1;
+    // Feedback settings
+    m_talonFXConfig.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.RotorSensor;
+    m_talonFXConfig.Feedback.SensorToMechanismRatio = 1;
 
-        m_talonFXConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    m_talonFXConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
-        // Gains
-        m_talonFXConfig.Slot0.kS = LeftChamberCalibrations.kS;
-        m_talonFXConfig.Slot0.kV = LeftChamberCalibrations.kV;
-        m_talonFXConfig.Slot0.kP = LeftChamberCalibrations.kP;
-        m_talonFXConfig.Slot0.kI = LeftChamberCalibrations.kI;
-        m_talonFXConfig.Slot0.kD = LeftChamberCalibrations.kD;
+    // Gains
+    m_talonFXConfig.Slot0.kS = LeftChamberCalibrations.kS;
+    m_talonFXConfig.Slot0.kV = LeftChamberCalibrations.kV;
+    m_talonFXConfig.Slot0.kP = LeftChamberCalibrations.kP;
+    m_talonFXConfig.Slot0.kI = LeftChamberCalibrations.kI;
+    m_talonFXConfig.Slot0.kD = LeftChamberCalibrations.kD;
 
-        // Current limit
-        m_talonFXConfig.CurrentLimits.StatorCurrentLimit = LeftChamberCalibrations.kMaxAmperage;
-        //m_talonFXConfig.CurrentLimits.SupplyCurrentLimit = LeftChamberCalibrations.kMaxSupplyAmperage;
+    // Current limit
+    m_talonFXConfig.CurrentLimits.StatorCurrentLimit = LeftChamberCalibrations.kMaxAmperage;
+    // m_talonFXConfig.CurrentLimits.SupplyCurrentLimit =
+    // LeftChamberCalibrations.kMaxSupplyAmperage;
 
-        m_motor1.getConfigurator().apply(m_talonFXConfig);
+    m_motor1.getConfigurator().apply(m_talonFXConfig);
+  }
+
+  public void updateSetpoint(double newSetpoint) {
+    if (!m_disable) {
+      m_motor1.setControl(m_request.withVelocity(newSetpoint));
+    } else {
+      if (m_reverseWhenDisabled) {
+        m_motor1.setControl(m_request.withVelocity(-Math.abs(newSetpoint)));
+      } else {
+        m_motor1.setControl(new DutyCycleOut(0));
+      }
     }
+  }
 
-    public void updateSetpoint(double newSetpoint) {
-        if (!m_disable) {
-            m_motor1.setControl(m_request.withVelocity(newSetpoint));
-        } else {
-            if (m_reverseWhenDisabled) {
-                m_motor1.setControl(m_request.withVelocity(-Math.abs(newSetpoint)));
-            } else {
-                m_motor1.set(0);
-            }
-        }
+  public double getSetpoint() {
+    return m_motor1.getClosedLoopReference().getValueAsDouble();
+  }
+
+  public void runOpenLoop(double dutyCycle) {
+    if (!m_disable) {
+      m_motor1.setControl(new DutyCycleOut(dutyCycle));
+    } else {
+      if (m_reverseWhenDisabled) {
+        m_motor1.setControl(new DutyCycleOut(-Math.abs(dutyCycle)));
+      } else {
+        m_motor1.setControl(new DutyCycleOut(0));
+      }
     }
+  }
 
-    public double getSetpoint() {
-        return m_motor1.getClosedLoopReference().getValueAsDouble();
-    }
+  public double getVelocity() {
+    return m_motor1.getVelocity().getValueAsDouble();
 
-    public void runOpenLoop(double dutyCycle) {
-        if (!m_disable) {
-            m_motor1.set(dutyCycle);
-        } else {
-            if (m_reverseWhenDisabled) {
-                m_motor1.set(-Math.abs(dutyCycle));
-            } else {
-                m_motor1.set(0);
-            }
-        }
-    }
+  }
 
-    public double getVelocity() {
-        return m_motor1.getVelocity().getValueAsDouble();
+  public void disable(boolean disable) {
+    m_disable = disable;
+  }
 
-    }
+  public void reverseWhenDisabled(boolean reverseWhenDisabled) {
+    m_reverseWhenDisabled = reverseWhenDisabled;
+  }
 
-    public void disable(boolean disable) {
-        m_disable = disable;
-    }
+  public boolean isDisabled() {
+    return m_disable;
+  }
 
-    public void reverseWhenDisabled(boolean reverseWhenDisabled) {
-        m_reverseWhenDisabled = reverseWhenDisabled;
-    }
-
-    public boolean isDisabled() {
-        return m_disable;
-    }
-
-    @Override
-    public void periodic() {
-        // This method will be called once per scheduler run
-    }
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }

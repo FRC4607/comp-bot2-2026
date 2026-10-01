@@ -1,7 +1,7 @@
 package frc.robot.Interpolation;
 
-import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
-import edu.wpi.first.math.interpolation.InverseInterpolator;
+import org.wpilib.math.interpolation.InterpolatingTreeMap;
+import org.wpilib.math.interpolation.InverseInterpolator;
 
 public class HoodInterpolatingTreeMap extends InterpolatingTreeMap<Double, Double> {
 
