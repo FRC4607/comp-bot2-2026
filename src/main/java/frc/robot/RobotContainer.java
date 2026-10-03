@@ -62,7 +62,7 @@ import org.wpilib.command2.ParallelDeadlineGroup;
 import org.wpilib.command2.RepeatCommand;
 import org.wpilib.command2.RunCommand;
 import org.wpilib.command2.WaitCommand;
-import org.wpilib.command2.button.CommandGamepad;
+import org.wpilib.command2.button.CommandNiDsXboxController;
 import org.wpilib.command2.button.RobotModeTriggers;
 import org.wpilib.command2.button.Trigger;
 import frc.robot.generated.TunerConstants;
@@ -94,7 +94,10 @@ public class RobotContainer {
 
   private final Telemetry logger = new Telemetry(MaxSpeed);
 
-  public final CommandGamepad joystick = new CommandGamepad(0);
+  // Xbox controller layout for the 2026 NI Driver Station (needed for FMS). The 2027 Driver
+  // Station sends a different button/axis order; it needs CommandGamepad instead (x() -> faceLeft(),
+  // y() -> faceUp(), plus turning off its default stick deadband).
+  public final CommandNiDsXboxController joystick = new CommandNiDsXboxController(0);
   public final Joystick m_operator = new Joystick(1);
 
   public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
@@ -177,8 +180,8 @@ public class RobotContainer {
   }
 
   /**
-   * WPILib 2027 numbers joystick buttons from 0; 2026 (MNSHL) numbered them from 1.
-   * Set this to 0 if the Driver Station's USB tab shows the panel already matches.
+   * WPILib 2027 numbers joystick buttons from 0; 2026 (NI DS) numbered them from 1. The NI
+   * Driver Station sends the panel's first button as index 0 (see WPILib's NiDsXboxController).
    */
   private static final int kOperatorButtonOffset = 1;
 
@@ -188,13 +191,6 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-
-    // WPILib 2027 gamepads apply a 0.1 stick deadband by default; MNSHL had none. The drive
-    // request below already applies its own 12% deadband, so turn the gamepad one off.
-    joystick.getGamepad().setLeftXDeadband(0);
-    joystick.getGamepad().setLeftYDeadband(0);
-    joystick.getGamepad().setRightXDeadband(0);
-    joystick.getGamepad().setRightYDeadband(0);
 
     Trigger operatorRedL = operatorButton(1);
     Trigger operatorRedR = operatorButton(2);
@@ -254,7 +250,7 @@ public class RobotContainer {
     // reset the field-centric heading on start press
     joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
-    joystick.faceLeft().onTrue(
+    joystick.x().onTrue(
         new ConditionalCommand(
             new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kBlueZeroCorner)),
             new InstantCommand(() -> drivetrain.resetPose(FieldConstants.kRedZeroCorner)),
@@ -293,7 +289,7 @@ public class RobotContainer {
             .alongWith(new LeftSetChamberOpenLoop(() -> 0, m_leftChamber))
             .alongWith(new RightSetChamberOpenLoop(() -> 0, m_rightChamber)));
 
-    joystick.faceUp().onTrue(
+    joystick.y().onTrue(
         new InstantCommand(() -> MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond) * 1.0)
             .alongWith(
                 new InstantCommand(() -> MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond) * 1.0))
