@@ -46,6 +46,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import org.wpilib.driverstation.MatchState;
 import org.wpilib.math.geometry.Pose2d;
+import org.wpilib.math.geometry.Rotation2d;
 import org.wpilib.telemetry.TelemetryTable;
 import org.wpilib.driverstation.Joystick;
 import org.wpilib.preferences.Preferences;
@@ -253,6 +254,9 @@ public class RobotContainer {
 
     // reset the field-centric heading on start press
     joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+
+    // A button (2027 gamepads name face buttons by position: faceDown is Xbox A)
+    joystick.faceDown().onTrue(new InstantCommand(() -> drivetrain.resetRotation(Rotation2d.fromDegrees(0))));
 
     joystick.faceLeft().onTrue(
         new ConditionalCommand(
